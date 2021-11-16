@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 import Observers.Subscriber;
 import Observers.Update;
-import Button.Button;
+import Players.HumanPlayer;
+import Buttons.Button;
 
 
 public class BoardDisplay extends Subscriber{
