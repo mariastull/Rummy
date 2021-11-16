@@ -14,18 +14,18 @@ public class BoardDisplay extends Subscriber{
     ArrayList<Button> buttons;
 
     public BoardDisplay(){
-
+        // TODO
     }
 
     public void giveUpdate(Update update){
-
+        // TODO
     }
 
     public void interpretClick(){
-
+        // TODO
     }
 
     public void drawBoard(){
-
+        // TODO
     }
 }
