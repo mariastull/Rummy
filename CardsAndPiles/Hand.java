@@ -8,5 +8,13 @@ Project 6-7
 public class Hand {
     Card[] cards;
     Card justDrawn;
-    Bool checkForWin() {}
+
+    public Hand() {
+        cards = new Card[5];
+        for(int i = 0; i < 5; i++){
+            cards[i] = null;
+        }
+    }
+
+    boolean checkForWin() {}
 }
