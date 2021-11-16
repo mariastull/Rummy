@@ -7,5 +7,12 @@ package Buttons;
 
 public class DiscardChoiceButton extends Button {
     Hand handRef;
-    void onClick() {}
+
+    void drawButton(){
+        // TODO
+    }
+
+    void onClick() {
+        // TODO
+    }
 }

@@ -51,7 +51,7 @@ public abstract class Player {
 
     private void discardCard(int cardToDiscard){
         Card discarded = hand.discard(cardToDiscard);
-        drawPileRef.discardCard(discarded);
+        discardPileRef.discardCard(discarded);
     }
 
     // overwrite this

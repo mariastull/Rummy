@@ -6,7 +6,16 @@ Project 6-7
 
 package Buttons;
 
+import CardsAndPiles.CardPile;
+
 public class CardPickupButton extends Button {
-    Pile pileRef;
-    void onClick() {}
+    CardPile pileRef;
+
+    void drawButton(){
+        // TODO
+    }
+
+    void onClick() {
+        // TODO
+    }
 }

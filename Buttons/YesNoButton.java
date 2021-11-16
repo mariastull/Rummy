@@ -7,5 +7,12 @@ Project 6-7
 package Buttons;
 
 public class YesNoButton extends Button{
-    void onClick() {}
+
+    void drawButton(){
+        // TODO
+    }
+
+    void onClick() {
+        // TODO
+    }
 }

@@ -6,12 +6,13 @@ Project 6-7
 
 package Buttons;
 
-public class Button {
+public abstract class Button {
     int screenPositionX;
     int screenPositionY;
     int width;
     int height;
     String buttonText;
-    void drawButton() {}
-    void onClick() {}
+
+    abstract void drawButton();
+    abstract void onClick();
 }
