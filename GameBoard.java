@@ -1,4 +1,3 @@
-package CardsAndPiles;
 /*
 CSCI 4448/5448 OOAD
 Lara Chunko, Maria Stull, Jake Swartwout
