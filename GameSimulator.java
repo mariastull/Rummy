@@ -34,7 +34,8 @@ public class GameSimulator {
     }
     
     void verifyWin() {
-        // TODO
+        // TODO 
+        // (call CheckWin on Hand)
     }
 
     public static void main(String[] args){
