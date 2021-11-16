@@ -6,5 +6,12 @@ Card class
 */
 
 public class Card{
-    
+    CardSuit suit;
+    int value;
+    String getFormattedValue() {}
+    String getFormattedFullName() {}
+}
+
+public enum CardSuit {
+    Hearts, Diamonds, Clubs, Spades
 }
