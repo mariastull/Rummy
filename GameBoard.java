@@ -6,6 +6,10 @@ Project 6-7
 import java.util.ArrayList;
 import java.util.Random;
 
+import CardsAndPiles.CardPile;
+import CardsAndPiles.Card;
+import CardsAndPiles.CardSuit;
+
 public class GameBoard {
 
     Random rand;
@@ -13,34 +17,34 @@ public class GameBoard {
     CardPile drawPile;
     CardPile discardPile;
 
-    void GameBoard() {
+    public GameBoard() {
         // initialize deck
+        ArrayList<Card> deck = new ArrayList<Card>();
         for(int i = 0; i < 13; i++) {
-            Card cardToAdd(CardSuit.Hearts, i);
-            drawPile.cards.add(cardToAdd);
-            Card cardToAdd(CardSuit.Diamonds, i);
-            drawPile.cards.add(cardToAdd);
-            Card cardToAdd(CardSuit.Spades, i);
-            drawPile.cards.add(cardToAdd);
-            Card cardToAdd(CardSuit.Clubs, i);
-            drawPile.cards.add(cardToAdd);
+            Card cardToAdd;
+            deck.add(new Card(CardSuit.Hearts, i));
+            deck.add(new Card(CardSuit.Diamonds, i));
+            deck.add(new Card(CardSuit.Spades, i));
+            deck.add(new Card(CardSuit.Clubs, i));
         }
 
-        // get random discard card
-        int randomValue = rand.nextInt(drawPile.size());
-        Card randomCard = drawPile.get(randomValue);
-        discardPile.add(randomCard);
-        drawPile.remove(randomValue);
+        // pick a random discard card
+        rand = new Random();
+        int randomValue = rand.nextInt(deck.size());
+        ArrayList<Card> oneCard = new ArrayList<Card>();
+        oneCard.add(deck.get(randomValue));
+        deck.remove(randomValue);
+
+        // create the piles now
+        drawPile = new CardPile(deck);
+        discardPile = new CardPile(oneCard);
     }
 
     ArrayList<Card> getStartingHand() {
         //return 5 cards to begin playing with
         ArrayList<Card> myHand = new ArrayList<Card>();
         for(int i = 0; i < 5; i++) {
-            int randomValue = rand.nextInt(drawPile.size());
-            Card randomCard = drawPile.get(randomValue);
-            myHand.add(randomCard);
-            drawPile.remove(randomValue);
+            myHand.add(drawPile.takeTop());
         }
         return myHand;
     }

@@ -12,7 +12,35 @@ public class GameSimulator {
     GameBoard board;
     HumanPlayer human;
     RobotPlayer robot;
-    void setupNewGame() {}
-    void startGame() {}
-    void verifyWin() {}
+
+    bool isPlayersTurn;
+
+    public GameSimulator(){
+        board = new GameBoard();
+        human = new HumanPlayer();
+        robot = new RobotPlayer();
+    }
+
+    void setupNewGame() {
+        board.shuffle();
+        human.hand = board.getStartingHand();
+        robot.hand = board.getStartingHand();
+
+        isPlayersTurn = random.nextBool();
+    }
+
+    void startGame() {
+        // TODO
+    }
+    
+    void verifyWin() {
+        // TODO
+    }
+
+    public static void main(String[] args){
+        GameSimulator sim = new GameSimulator();
+        sim.setupNewGame();
+        sim.startGame();
+        sim.verifyWin();
+    }
 }

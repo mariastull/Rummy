@@ -1,6 +1,6 @@
 package CardsAndPiles;
-import java.util.Random;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /*
 CSCI 4448/5448 OOAD
@@ -9,10 +9,18 @@ Project 6-7
 */
 
 public class CardPile {
-    ArrayList<Card> cards;
+    private ArrayList<Card> cards;
 
     public CardPile() {
         cards = new ArrayList<Card>();
+    }
+
+    public CardPile(ArrayList<Card> cards){
+        this.cards = cards;
+    }
+
+    public int getSize(){
+        return cards.size();
     }
 
     public void shufflePile() {
@@ -20,7 +28,7 @@ public class CardPile {
     }
 
     Card peekTopCard() {
-        return discardPile.get(0);
+        return cards.get(0);
     }
 
     public Card takeTop() {
