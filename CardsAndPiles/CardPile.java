@@ -9,8 +9,19 @@ Project 6-7
 
 public class CardPile {
     ArrayList<Card> cards;
-    public void shufflePile() {}
-    public Card peekTop() {}
+
+    public CardPile() {
+        cards = new ArrayList<Card>();
+    }
+
+    public void shufflePile() {
+        
+    }
+
+    Card peekTopCard() {
+        return discardPile.get(0);
+    }
+
     public Card takeTop() {}
     public void discardCard(Card toDiscard) {}
     public void addCard(Card toAdd) {}
