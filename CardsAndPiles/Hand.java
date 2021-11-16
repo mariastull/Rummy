@@ -6,8 +6,8 @@ Project 6-7
 */
 
 public class Hand {
-    Card[] cards;
-    Card justDrawn;
+    public Card[] cards;
+    public Card justDrawn;
 
     public Hand() {
         cards = new Card[5];
@@ -16,5 +16,12 @@ public class Hand {
         }
     }
 
-    boolean checkForWin() {}
+    public boolean checkForWin() {}
+
+    public Card discard(int which){
+        Card choice = cards[which];
+        cards[which] = justDrawn;
+        justDrawn = null;
+        return choice;
+    }
 }

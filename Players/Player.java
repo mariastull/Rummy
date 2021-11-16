@@ -1,5 +1,6 @@
 package Players;
 
+import CardsAndPiles.Card;
 import CardsAndPiles.CardPile;
 import CardsAndPiles.Hand;
 
@@ -10,11 +11,19 @@ Project 6-7
 */
 
 public abstract class Player {
-    public Hand hand;
+    private Hand hand;
     private CardPile discardPileRef;
+    private CardPile drawPileRef;
 
     public Player(){
         hand = new Hand();
+        discardPileRef = null;
+        drawPileRef = null;
+    }
+
+    public void setPileRefs(CardPile discardRef, CardPile drawRef){
+        discardPileRef = discardRef;
+        drawPileRef = drawRef;
     }
 
     public boolean takeTurn() {
@@ -31,16 +40,18 @@ public abstract class Player {
 
     private void addCardToHand(boolean isFromDiscard){
         if(isFromDiscard){
-            hand.cardJustDrawn = discardPileRef
+            hand.justDrawn = discardPileRef.takeTop();
+        } else {
+            hand.justDrawn = drawPileRef.takeTop();
         }
-        
     }
     
     // overwrite this
     protected abstract int askCardDiscard();
 
     private void discardCard(int cardToDiscard){
-
+        Card discarded = hand.discard(cardToDiscard);
+        drawPileRef.discardCard(discarded);
     }
 
     // overwrite this
