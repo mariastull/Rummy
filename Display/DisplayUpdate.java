@@ -1,7 +1,6 @@
 package Display;
-import Observers.Update;
 
-public enum DisplayUpdate { //extends Update {
+public enum DisplayUpdate {
     ShowStartButton,
     HandUpdated,
     DiscardUpdated,
@@ -10,5 +9,6 @@ public enum DisplayUpdate { //extends Update {
     AskForGrabChoice,
     AskForDiscardChoice,
     ShowWin,
-    ShowLoss
+    ShowLoss,
+    ShowTie
 }

@@ -1,9 +1,15 @@
 package Observers;
 
-public interface IPublisher {
-    Subscriber subscriber = null;
+public interface IPublisher<UpdateType> {
 
-    public void addSubscriber(Subscriber subscriber);
+    /**
+     * Records the given subscriber so we know who to publish to
+     * @param subscriber the new subscriber to add
+     */
+    public void addSubscriber(ISubscriber<UpdateType> subscriber);
 
-    public void notifySubscriber();
+    /**
+     * pass along the given update to our subscriber
+     */
+    public void notifySubscriber(UpdateType update);
 }
