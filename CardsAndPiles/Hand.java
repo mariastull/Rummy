@@ -25,10 +25,8 @@ public class Hand {
 
     private void addUnorderedSubsets(ArrayList<Integer> set, ArrayList<HashSet> collective){
         HashSet<Integer> meld = new HashSet<Integer>();
-        System.out.println("Size of set: " +set.size());
         for (int i = 0; i < set.size(); i++){
             meld.add(set.get(i));
-            System.out.println(set.get(i));
         }
         collective.add(meld);
 
