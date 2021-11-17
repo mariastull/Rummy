@@ -11,14 +11,19 @@ Project 6-7
 */
 
 public abstract class Player {
-    private Hand hand;
-    private CardPile discardPileRef;
-    private CardPile drawPileRef;
+    protected Hand hand;
+    protected CardPile discardPileRef;
+    protected CardPile drawPileRef;
 
     public Player(){
         hand = new Hand();
         discardPileRef = null;
         drawPileRef = null;
+    }
+
+    public void setupHand(Card[] cards){
+        hand.cards = cards;
+        hand.justDrawn = null;
     }
 
     public void setPileRefs(CardPile discardRef, CardPile drawRef){

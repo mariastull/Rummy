@@ -21,7 +21,6 @@ public class GameBoard {
         // initialize deck
         ArrayList<Card> deck = new ArrayList<Card>();
         for(int i = 0; i < 13; i++) {
-            Card cardToAdd;
             deck.add(new Card(CardSuit.Hearts, i));
             deck.add(new Card(CardSuit.Diamonds, i));
             deck.add(new Card(CardSuit.Spades, i));
@@ -40,11 +39,11 @@ public class GameBoard {
         discardPile = new CardPile(oneCard);
     }
 
-    ArrayList<Card> getStartingHand() {
+    Card[] getStartingHand() {
         //return 5 cards to begin playing with
-        ArrayList<Card> myHand = new ArrayList<Card>();
+        Card[] myHand = new Card[5];
         for(int i = 0; i < 5; i++) {
-            myHand.add(drawPile.takeTop());
+            myHand[i] = drawPile.takeTop();
         }
         return myHand;
     }

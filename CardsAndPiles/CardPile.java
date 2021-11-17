@@ -27,7 +27,7 @@ public class CardPile {
         Collections.shuffle(cards);
     }
 
-    Card peekTopCard() {
+    public Card peekTopCard() {
         return cards.get(0);
     }
 

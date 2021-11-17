@@ -5,6 +5,8 @@ Project 6-7
 */
 package Buttons;
 
+import CardsAndPiles.Hand;
+
 public class DiscardChoiceButton extends Button {
     Hand handRef;
 

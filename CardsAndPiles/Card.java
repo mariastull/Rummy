@@ -1,4 +1,5 @@
 package CardsAndPiles;
+
 /*
 CSCI 4448/5448 OOAD
 Lara Chunko, Maria Stull, Jake Swartwout
@@ -14,8 +15,11 @@ public class Card{
         this.value = value;
     }
 
+    public CardSuit getSuit(){ return suit; }
+    public int getValue(){ return value; }
+
     String getFormattedValue() {
-        String valueName = value;
+        String valueName = ""+ value; // some junk to do string conversion
         switch (value) {
             case 11: 
                 valueName = "Jack";
@@ -33,24 +37,6 @@ public class Card{
     }
 
     String getFormattedFullName() {
-        String valueName = value;
-        switch (value) {
-            case 11: 
-                valueName = "Jack";
-                break;
-            case 12:
-                valueName = "Queen";
-                break;
-            case 13:
-                valueName = "King";
-                break;
-            default:
-                break;
-        }
-        return valueName + " of " + suit;
+        return getFormattedValue() + " of " + suit;
     }
-}
-
-public enum CardSuit {
-    Hearts, Diamonds, Clubs, Spades
 }

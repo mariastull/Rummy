@@ -1,3 +1,5 @@
+import java.util.Random;
+
 import CardsAndPiles.GameBoard;
 import Players.HumanPlayer;
 import Players.RobotPlayer;
@@ -13,7 +15,7 @@ public class GameSimulator {
     HumanPlayer human;
     RobotPlayer robot;
 
-    bool isPlayersTurn;
+    boolean isPlayersTurn;
 
     public GameSimulator(){
         board = new GameBoard();
@@ -22,11 +24,12 @@ public class GameSimulator {
     }
 
     void setupNewGame() {
-        board.shuffle();
-        human.hand = board.getStartingHand();
-        robot.hand = board.getStartingHand();
+        board.drawPile.shufflePile();
+        human.setupHand(board.getStartingHand());
+        robot.setupHand(board.getStartingHand());
 
-        isPlayersTurn = random.nextBool();
+        Random rng = new Random();
+        isPlayersTurn = rng.nextBoolean();
     }
 
     void startGame() {

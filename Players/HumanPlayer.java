@@ -7,7 +7,12 @@ Project 6-7
 */
 
 public class HumanPlayer extends Player {
-    boolean askCardChoice() {}
-    int askCardDiscard() {}
-    boolean askEndGame() {}
+    @Override
+    protected boolean askCardChoice() {}
+
+    @Override
+    protected int askCardDiscard() {}
+
+    @Override
+    protected boolean askEndGame() {}
 }
