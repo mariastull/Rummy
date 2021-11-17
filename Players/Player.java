@@ -38,10 +38,15 @@ public abstract class Player implements IPublisher<DisplayUpdate>{
 
     public boolean takeTurn() {
         boolean cardChoice = askCardChoice();
+        if(cardChoice) System.out.println("Taking from the discard pile");
+        else System.out.println("Taking from the top of the deck");
         addCardToHand(cardChoice);
         int cardToDiscard = askCardDiscard();
+        System.out.println("Chose to discard card: " + (cardToDiscard+1));
         discardCard(cardToDiscard);
         boolean endGame = askEndGame();
+        if(endGame) System.out.println("Chose to end the game");
+        else System.out.println("Will keep playing");
         return endGame;
     }
 
@@ -91,6 +96,18 @@ public abstract class Player implements IPublisher<DisplayUpdate>{
      */
     public void notifySubscriber(DisplayUpdate update){
         subscriber.giveUpdate(update);
+    }
+
+    /**
+     * Prints their current hand
+     */
+    public void printHand(){
+        for(int i = 0; i < Hand.HAND_SIZE; i++){
+            System.out.println("- " + (i+1) + ": " + hand.cards[i].getFormattedFullName());
+        }
+        if(hand.justDrawn != null){
+            System.out.println("- " + Hand.HAND_SIZE + ": " + hand.justDrawn.getFormattedFullName());
+        }
     }
 
     /**

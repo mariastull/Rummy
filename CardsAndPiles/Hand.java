@@ -52,6 +52,9 @@ public class Hand {
     }
 
     public boolean checkForWin() {
+        // for now, just always assume nobody has won
+        
+        /*
         // add cards into a 4 x 14 array (skip 0)--will be position in hand for cards in hand, -1 otherwise
         int[][] deckArr = new int[4][14];
         Arrays.fill(deckArr, -1);
@@ -130,6 +133,7 @@ public class Hand {
                 }
             }
         }
+        */
         return false;
     }
 

@@ -50,4 +50,8 @@ public class GameBoard {
         return myHand;
     }
 
+    public void printDiscardTop(){
+        System.out.println("Discard pile's top:");
+        System.out.println(discardPile.peekTopCard().getFormattedFullName());
+    }
 }

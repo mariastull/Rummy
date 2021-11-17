@@ -117,4 +117,9 @@ public class RobotPlayer extends Player {
         // just call the superclass's function
         return hasWinningHand();
     }
+    
+    public void printHand(){
+        System.out.println("The robot's hand:");
+        super.printHand();
+    }
 }

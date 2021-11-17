@@ -37,10 +37,11 @@ public class BoardDisplay implements ISubscriber<DisplayUpdate> {
                 // do something
                 break;
             case ShowIsComputerTurn:
-                // do something
+            System.out.println("It's the robot's turn");
                 break;
             case ShowIsPlayerTurn:
-                // do something
+                System.out.println("It's the player's turn");
+                drawBoard();
                 break;
             case AskForGrabChoice:
                 // do something
@@ -49,13 +50,13 @@ public class BoardDisplay implements ISubscriber<DisplayUpdate> {
                 // do something
                 break;
             case ShowWin:
-                // do something
+                System.out.println("The player won!!");
                 break;
             case ShowLoss:
-                // do something
+                System.out.println("The player lost :(");
                 break;
             case ShowTie:
-                // do something
+                System.out.println("Game ends in a tie");
                 break;
         }
     }
@@ -65,6 +66,7 @@ public class BoardDisplay implements ISubscriber<DisplayUpdate> {
     }
 
     public void drawBoard(){
-        // TODO: implement
+        userRef.printHand();
+        boardRef.printDiscardTop();
     }
 }
