@@ -37,14 +37,14 @@ public class HumanPlayer extends Player {
     @Override
     protected int askCardDiscard() {
         printHand();
-        System.out.println("Which card would you like to discard? (1-6)");
+        System.out.println("Which card would you like to discard? (1-7)");
         boolean inputValid = false;
         int input = 0;
         while(!inputValid){
             try {
                 input = keyboard.nextInt();
             } catch (Exception e) {
-                System.out.println("That's not a number, choose between 1 and 6");
+                System.out.println("That's not a number, choose between 1 and 7");
                 String trash = keyboard.next();
                 continue;
             }
@@ -52,7 +52,7 @@ public class HumanPlayer extends Player {
                 System.out.println("Please choose a number that's 1 or greater");
                 continue;
             }
-            if(input > 6){
+            if(input > 7){
                 System.out.println("Please choose a number that's 5 or less");
                 continue;
             }

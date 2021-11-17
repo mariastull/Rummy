@@ -106,7 +106,7 @@ public abstract class Player implements IPublisher<DisplayUpdate>{
             System.out.println("- " + (i+1) + ": " + hand.cards[i].getFormattedFullName());
         }
         if(hand.justDrawn != null){
-            System.out.println("- " + Hand.HAND_SIZE + ": " + hand.justDrawn.getFormattedFullName());
+            System.out.println("- " + (Hand.HAND_SIZE+1) + ": " + hand.justDrawn.getFormattedFullName());
         }
     }
 
