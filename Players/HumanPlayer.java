@@ -8,11 +8,20 @@ Project 6-7
 
 public class HumanPlayer extends Player {
     @Override
-    protected boolean askCardChoice() {}
+    protected boolean askCardChoice() {
+        // TODO: implement
+        return false;
+    }
 
     @Override
-    protected int askCardDiscard() {}
+    protected int askCardDiscard() {
+        // TODO: implement
+        return 5;
+    }
 
     @Override
-    protected boolean askEndGame() {}
+    protected boolean askEndGame() {
+        // TODO: implement
+        return true;
+    }
 }

@@ -113,6 +113,7 @@ public class RobotPlayer extends Player {
      */
     @Override
     protected boolean askEndGame() {
-        return hand.checkForWin();
+        // just call the superclass's function
+        return hasWinningHand();
     }
 }

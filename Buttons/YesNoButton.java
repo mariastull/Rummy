@@ -9,10 +9,10 @@ package Buttons;
 public class YesNoButton extends Button{
 
     void drawButton(){
-        // TODO
+        // TODO: implement
     }
 
     void onClick() {
-        // TODO
+        // TODO: implement
     }
 }

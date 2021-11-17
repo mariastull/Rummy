@@ -61,4 +61,14 @@ public abstract class Player {
 
     // overwrite this
     protected abstract boolean askEndGame();
+
+    /**
+     * Allows us to access the hand's checkForWin function
+     * without making the hand itself public
+     * @return True if their hand is winning, false if not
+     */
+    // TODO: add to UML
+    public boolean hasWinningHand(){
+        return hand.checkForWin();
+    }
 }

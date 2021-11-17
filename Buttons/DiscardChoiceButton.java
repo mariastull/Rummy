@@ -11,10 +11,10 @@ public class DiscardChoiceButton extends Button {
     Hand handRef;
 
     void drawButton(){
-        // TODO
+        // TODO: implement
     }
 
     void onClick() {
-        // TODO
+        // TODO: implement
     }
 }

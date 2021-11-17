@@ -12,10 +12,10 @@ public class CardPickupButton extends Button {
     CardPile pileRef;
 
     void drawButton(){
-        // TODO
+        // TODO: implement
     }
 
     void onClick() {
-        // TODO
+        // TODO: implement
     }
 }
