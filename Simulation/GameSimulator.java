@@ -14,11 +14,12 @@ Project 6-7
 
 public class GameSimulator {
     private GameBoard board;
-    private BoardDisplay display;
     private HumanPlayer human;
     private RobotPlayer robot;
 
     private boolean isPlayersTurn;
+    
+    private BoardDisplay display;
 
     public GameSimulator(){
         board = new GameBoard();
@@ -28,12 +29,19 @@ public class GameSimulator {
 
     void linkToDisplay(BoardDisplay display) {
         this.display = display;
+        this.display.updateRefs(board, human);
     }
 
     void setupNewGame() {
         board.drawPile.shufflePile();
+        
         human.setupHand(board.getStartingHand());
+        human.setPileRefs(board.discardPile, board.drawPile);
+        human.setSubscriber(display);
+
         robot.setupHand(board.getStartingHand());
+        robot.setPileRefs(board.discardPile, board.drawPile);
+        robot.setSubscriber(display);
 
         Random rng = new Random();
         isPlayersTurn = rng.nextBoolean();

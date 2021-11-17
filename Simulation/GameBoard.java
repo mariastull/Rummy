@@ -10,18 +10,19 @@ import java.util.Random;
 import CardsAndPiles.CardPile;
 import CardsAndPiles.Card;
 import CardsAndPiles.CardSuit;
+import CardsAndPiles.Hand;
 
 public class GameBoard {
 
     Random rand;
 
-    CardPile drawPile;
-    CardPile discardPile;
+    public CardPile drawPile;
+    public CardPile discardPile;
 
     public GameBoard() {
         // initialize deck
         ArrayList<Card> deck = new ArrayList<Card>();
-        for(int i = 0; i < 13; i++) {
+        for(int i = 1; i <= 13; i++) {
             deck.add(new Card(CardSuit.Hearts, i));
             deck.add(new Card(CardSuit.Diamonds, i));
             deck.add(new Card(CardSuit.Spades, i));
@@ -40,10 +41,10 @@ public class GameBoard {
         discardPile = new CardPile(oneCard);
     }
 
-    Card[] getStartingHand() {
-        //return 5 cards to begin playing with
-        Card[] myHand = new Card[5];
-        for(int i = 0; i < 5; i++) {
+    public Card[] getStartingHand() {
+        //return cards to begin playing with
+        Card[] myHand = new Card[Hand.HAND_SIZE];
+        for(int i = 0; i < Hand.HAND_SIZE; i++) {
             myHand[i] = drawPile.takeTop();
         }
         return myHand;

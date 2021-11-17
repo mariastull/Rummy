@@ -18,9 +18,12 @@ public class Card{
     public CardSuit getSuit(){ return suit; }
     public int getValue(){ return value; }
 
-    String getFormattedValue() {
+    public String getFormattedValue() {
         String valueName = ""+ value; // some junk to do string conversion
         switch (value) {
+            case 1:
+                valueName = "Ace";
+                break;
             case 11: 
                 valueName = "Jack";
                 break;
@@ -36,7 +39,7 @@ public class Card{
         return valueName;
     }
 
-    String getFormattedFullName() {
+    public String getFormattedFullName() {
         return getFormattedValue() + " of " + suit;
     }
 }

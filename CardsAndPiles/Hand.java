@@ -14,9 +14,11 @@ public class Hand {
     public Card[] cards;
     public Card justDrawn;
 
+    public final static int HAND_SIZE = 7;
+
     public Hand() {
-        cards = new Card[7];
-        for(int i = 0; i < 7; i++){
+        cards = new Card[HAND_SIZE];
+        for(int i = 0; i < HAND_SIZE; i++){
             cards[i] = null;
         }
     }
@@ -56,8 +58,8 @@ public class Hand {
         for (int i=0; i< 7; i++){
             Card card = cards[i];
             deckArr[card.suit.ordinal()][card.value] = i;
-            /* NOTE: using ordinal for enums is supposed to be bad practice, but we are not going to
-             change the number of suits in a 52-card deck so this shouldn't break anything */
+            // NOTE: using ordinal for enums is supposed to be bad practice, but we are not going to
+            // change the number of suits in a 52-card deck so this shouldn't break anything
         }
 
         // create ArrayList of sets for possible melds 
@@ -132,8 +134,13 @@ public class Hand {
     }
 
     public Card discard(int which){
-        Card choice = cards[which];
-        cards[which] = justDrawn;
+        Card choice;
+        if(which == HAND_SIZE){
+            choice = justDrawn;
+        } else {
+            choice = cards[which];
+            cards[which] = justDrawn;
+        }
         justDrawn = null;
         return choice;
     }

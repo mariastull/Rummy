@@ -6,6 +6,7 @@ Project 6-7
 */
 
 import CardsAndPiles.Card;
+import CardsAndPiles.Hand;
 
 public class RobotPlayer extends Player {
 
@@ -74,19 +75,19 @@ public class RobotPlayer extends Player {
     protected int askCardDiscard() {
         // setup work
         // build up a pretend hand
-        Card[] pretendHand = new Card[5];
+        Card[] pretendHand = new Card[Hand.HAND_SIZE];
         // fill it with our real hand
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < Hand.HAND_SIZE; i++){
             pretendHand[i] = hand.cards[i];
         }
 
         // check the score of the one we just picked up
         int worstScore = cardImprovementScore(hand.justDrawn, pretendHand);
-        // index 5 is the current worst
-        int worstIndex = 5;
+        // the final index is the current worst
+        int worstIndex = Hand.HAND_SIZE;
 
         // check removing each card to find the worst
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < Hand.HAND_SIZE; i++){
             // take out the card at that spot
             Card maybeBad = pretendHand[i];
             // substitute in the one we just drew

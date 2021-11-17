@@ -3,6 +3,9 @@ package Players;
 import CardsAndPiles.Card;
 import CardsAndPiles.CardPile;
 import CardsAndPiles.Hand;
+import Observers.IPublisher;
+import Observers.ISubscriber;
+import Display.DisplayUpdate;
 
 /*
 CSCI 4448/5448 OOAD
@@ -10,10 +13,12 @@ Lara Chunko, Maria Stull, Jake Swartwout
 Project 6-7
 */
 
-public abstract class Player {
+public abstract class Player implements IPublisher<DisplayUpdate>{
     protected Hand hand;
     protected CardPile discardPileRef;
     protected CardPile drawPileRef;
+
+    private ISubscriber<DisplayUpdate> subscriber;
 
     public Player(){
         hand = new Hand();
@@ -48,6 +53,7 @@ public abstract class Player {
             hand.justDrawn = discardPileRef.takeTop();
         } else {
             hand.justDrawn = drawPileRef.takeTop();
+            checkReshuffleDeck();
         }
     }
     
@@ -70,5 +76,31 @@ public abstract class Player {
     // TODO: add to UML
     public boolean hasWinningHand(){
         return hand.checkForWin();
+    }
+
+    /**
+     * Records the given subscriber so we know who to publish to
+     * @param subscriber the new subscriber to add
+     */
+    public void setSubscriber(ISubscriber<DisplayUpdate> subscriber){
+        this.subscriber = subscriber;
+    }
+
+    /**
+     * pass along the given update to our subscriber
+     */
+    public void notifySubscriber(DisplayUpdate update){
+        subscriber.giveUpdate(update);
+    }
+
+    /**
+     * Checks if we ran out of cards in the draw pile and need to reshuffle the discard into the draw
+     */
+    // TODO: add to uml
+    public void checkReshuffleDeck(){
+        if(drawPileRef.getSize() == 0){
+            System.out.println("Ran out of cards in the draw deck!");
+            // TODO: actually do something
+        }
     }
 }

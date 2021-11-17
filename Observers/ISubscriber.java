@@ -1,6 +1,6 @@
 package Observers;
 
-// TODO: update in UML to an interface
+// TODO: update in UML that it's an interface
 public interface ISubscriber<UpdateType> {
     /**
      * Inform the subscriber some type of update
