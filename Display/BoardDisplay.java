@@ -37,7 +37,7 @@ public class BoardDisplay implements ISubscriber<DisplayUpdate> {
                 // do something
                 break;
             case ShowIsComputerTurn:
-            System.out.println("It's the robot's turn");
+                System.out.println("It's the robot's turn");
                 break;
             case ShowIsPlayerTurn:
                 System.out.println("It's the player's turn");
