@@ -23,6 +23,10 @@ public class Hand {
         }
     }
 
+    /*
+    *   Helper for checkForWin--add all possible 3-of-a-kind or 4-of-a-kinds to the list of
+    *   possible melds
+    */
     private void addUnorderedSubsets(ArrayList<Integer> set, ArrayList<HashSet> collective){
         HashSet<Integer> meld = new HashSet<Integer>();
         for (int i = 0; i < set.size(); i++){
@@ -47,6 +51,10 @@ public class Hand {
         }        
     }
 
+    /*
+    * Helper for checkForWin--add all possible runs (straight flush of length 3+)
+    * to the list of possible melds
+    */
     private void addOrderedSubsets(ArrayList<Integer> set, ArrayList<HashSet> collective){
         int n = set.size();
         for (int size = 3; size <= n; size++){
@@ -60,10 +68,20 @@ public class Hand {
         }
     }
 
+    /*
+    * Returns true if the hand is a winning hand, otherwise returns false. 
+    *
+    * Finds every possible meld (3/4 of a kind or straight flush) in hand
+    * Then, for every meld and every pair of melds (note: there can only be 1 or 2 melds in a hand,
+    * since each meld must be size >=3 and the hand size is 7), check that they include every 
+    * card in the hand with no overlap. If so, the hand is valid. If no meld or pair of melds 
+    * uses each card in the hand exactly once, the hand is not a winning hand.
+    *
+    * Note: this algorithm is necessarily complex--if broken, ping maria.stull@colorado.edu
+    * to check in about changes
+    */
     public boolean checkForWin() {
-        // for now, just always assume nobody has won
-        
-        
+         
         // add cards into a 4 x 14 array (skip 0)--will be position in hand for cards in hand, -1 otherwise
         int[][] deckArr = new int[4][14];
         for (int i = 0; i<4; i++){
@@ -74,7 +92,7 @@ public class Hand {
         for (int i=0; i< HAND_SIZE; i++){
             Card card = cards[i];
             deckArr[card.getSuit().ordinal()][card.value] = i;
-            // NOTE: using ordinal for enums is supposed to be bad practice, but we are not going to
+            // NOTE: using ordinal for enums is bad practice, but we are not going to
             // change the number of suits in a 52-card deck so this shouldn't break anything
         }
 
