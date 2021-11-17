@@ -78,7 +78,6 @@ public abstract class Player implements IPublisher<DisplayUpdate>{
      * without making the hand itself public
      * @return True if their hand is winning, false if not
      */
-    // TODO: add to UML
     public boolean hasWinningHand(){
         return hand.checkForWin();
     }
@@ -113,7 +112,6 @@ public abstract class Player implements IPublisher<DisplayUpdate>{
     /**
      * Checks if we ran out of cards in the draw pile and need to reshuffle the discard into the draw
      */
-    // TODO: add to uml
     public void checkReshuffleDeck(){
         if(drawPileRef.getSize() == 0){
             System.out.println("Ran out of cards in the draw deck!");

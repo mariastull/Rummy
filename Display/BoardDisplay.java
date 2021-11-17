@@ -18,7 +18,6 @@ public class BoardDisplay implements ISubscriber<DisplayUpdate> {
         buttons = new ArrayList<Button>();
     }
 
-    // TODO: add in UML
     public void updateRefs(GameBoard boardRef, HumanPlayer userRef){
         this.boardRef = boardRef;
         this.userRef = userRef;
