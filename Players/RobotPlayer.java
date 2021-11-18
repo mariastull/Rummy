@@ -23,7 +23,6 @@ public class RobotPlayer extends Player {
      * @param hand the current hand to compare against
      * @return the "improvement" score that having that card would add
      */
-    // TODO: add to the UML
     private static int cardImprovementScore(Card newCard, Card[] oldHand) {
         int matches = 0;
 

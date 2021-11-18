@@ -36,7 +36,7 @@ public abstract class Player implements IPublisher<DisplayUpdate>{
         drawPileRef = drawRef;
     }
 
-    public boolean takeTurn() {
+    public final boolean takeTurn() {
         boolean cardChoice = askCardChoice();
         if(cardChoice) System.out.println("Taking from the discard pile");
         else System.out.println("Taking from the top of the deck");
@@ -53,7 +53,7 @@ public abstract class Player implements IPublisher<DisplayUpdate>{
     // overwrite this
     protected abstract boolean askCardChoice();
 
-    private void addCardToHand(boolean isFromDiscard){
+    private final void addCardToHand(boolean isFromDiscard){
         if(isFromDiscard){
             hand.justDrawn = discardPileRef.takeTop();
         } else {
@@ -65,7 +65,7 @@ public abstract class Player implements IPublisher<DisplayUpdate>{
     // overwrite this
     protected abstract int askCardDiscard();
 
-    private void discardCard(int cardToDiscard){
+    private final void discardCard(int cardToDiscard){
         Card discarded = hand.discard(cardToDiscard);
         discardPileRef.discardCard(discarded);
     }
@@ -78,7 +78,6 @@ public abstract class Player implements IPublisher<DisplayUpdate>{
      * without making the hand itself public
      * @return True if their hand is winning, false if not
      */
-    // TODO: add to UML
     public boolean hasWinningHand(){
         return hand.checkForWin();
     }
@@ -113,7 +112,6 @@ public abstract class Player implements IPublisher<DisplayUpdate>{
     /**
      * Checks if we ran out of cards in the draw pile and need to reshuffle the discard into the draw
      */
-    // TODO: add to uml
     public void checkReshuffleDeck(){
         if(drawPileRef.getSize() == 0){
             System.out.println("Ran out of cards in the draw deck!");
