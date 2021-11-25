@@ -36,11 +36,10 @@ public class BoardDisplay implements ISubscriber<DisplayUpdate> {
                 // do something
                 break;
             case ShowIsComputerTurn:
-                System.out.println("It's the robot's turn");
+                drawBoard(false);
                 break;
             case ShowIsPlayerTurn:
-                System.out.println("It's the player's turn");
-                drawBoard();
+                drawBoard(true);
                 break;
             case AskForGrabChoice:
                 // do something
@@ -49,13 +48,13 @@ public class BoardDisplay implements ISubscriber<DisplayUpdate> {
                 // do something
                 break;
             case ShowWin:
-                System.out.println("The player won!!");
+                // do something
                 break;
             case ShowLoss:
-                System.out.println("The player lost :(");
+                // do something
                 break;
             case ShowTie:
-                System.out.println("Game ends in a tie");
+                // do something
                 break;
         }
     }
@@ -64,8 +63,8 @@ public class BoardDisplay implements ISubscriber<DisplayUpdate> {
         // TODO: implement
     }
 
-    public void drawBoard(){
-        userRef.printHand();
-        boardRef.printDiscardTop();
+    // TODO: add the extra param to the UML
+    public void drawBoard(boolean isPlayerTurn){
+        // TODO: implement
     }
 }

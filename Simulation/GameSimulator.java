@@ -45,26 +45,25 @@ public class GameSimulator {
 
         Random rng = new Random();
         isPlayersTurn = rng.nextBoolean();
-        if(isPlayersTurn) System.out.println("Player goes first");
-        else System.out.println("Robot goes first");
     }
 
     void startGame() {
-        display.drawBoard();
-        boolean endCalled = false;
-        while(!endCalled) {
-            System.out.println("----------------------");
-            // let them take their turn
-            if(isPlayersTurn){
-                display.giveUpdate(DisplayUpdate.ShowIsPlayerTurn);
-                endCalled = human.takeTurn();
-            } else {
-                display.giveUpdate(DisplayUpdate.ShowIsComputerTurn);
-                endCalled = robot.takeTurn();
-            }
-            // switch turns
-            isPlayersTurn = !isPlayersTurn;
-        }
+        // TODO: implement
+        // display.drawBoard();
+        // boolean endCalled = false;
+        // while(!endCalled) {
+        //     System.out.println("----------------------");
+        //     // let them take their turn
+        //     if(isPlayersTurn){
+        //         display.giveUpdate(DisplayUpdate.ShowIsPlayerTurn);
+        //         endCalled = human.takeTurn();
+        //     } else {
+        //         display.giveUpdate(DisplayUpdate.ShowIsComputerTurn);
+        //         endCalled = robot.takeTurn();
+        //     }
+        //     // switch turns
+        //     isPlayersTurn = !isPlayersTurn;
+        // }
     }
     
     void verifyWin() {
@@ -92,17 +91,14 @@ public class GameSimulator {
         }
 
         display.giveUpdate(update);
-
-        human.printHand();
-        robot.printHand();
     }
 
-    public static void main(String[] args){
-        GameSimulator sim = new GameSimulator();
-        BoardDisplay display = new BoardDisplay();
-        sim.linkToDisplay(display);
-        sim.setupNewGame();
-        sim.startGame();
-        sim.verifyWin();
-    }
+    // public static void main(String[] args){
+    //     GameSimulator sim = new GameSimulator();
+    //     BoardDisplay display = new BoardDisplay();
+    //     sim.linkToDisplay(display);
+    //     sim.setupNewGame();
+    //     sim.startGame();
+    //     sim.verifyWin();
+    // }
 }

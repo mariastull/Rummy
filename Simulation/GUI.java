@@ -1,5 +1,6 @@
 package Simulation;
 
+import Display.BoardDisplay;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,7 +26,13 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) {
         GameSimulator sim = new GameSimulator();
+        BoardDisplay display = new BoardDisplay();
+
+        sim.linkToDisplay(display);
+        sim.setupNewGame();
+        sim.startGame();
         
+    
         primaryStage.setTitle("OOAD Rummy");
         
         GridPane grid = new GridPane();
