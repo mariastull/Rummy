@@ -24,7 +24,7 @@ public class Card{
             case 1:
                 valueName = "Ace";
                 break;
-            case 11: 
+            case 11:
                 valueName = "Jack";
                 break;
             case 12:
