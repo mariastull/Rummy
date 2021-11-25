@@ -46,6 +46,7 @@ public class HumanPlayer extends Player {
             } catch (Exception e) {
                 System.out.println("That's not a number, choose between 1 and 7");
                 String trash = keyboard.next();
+                if(trash == null){/*"use" trash to get rid of warning*/}
                 continue;
             }
             if(input <= 0){

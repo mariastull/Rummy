@@ -1,7 +1,6 @@
 package CardsAndPiles;
 
 import java.util.HashSet;
-import java.util.Arrays;
 import java.util.ArrayList;
 
 /*
@@ -27,7 +26,7 @@ public class Hand {
     *   Helper for checkForWin--add all possible 3-of-a-kind or 4-of-a-kinds to the list of
     *   possible melds
     */
-    private void addUnorderedSubsets(ArrayList<Integer> set, ArrayList<HashSet> collective){
+    private void addUnorderedSubsets(ArrayList<Integer> set, ArrayList<HashSet<Integer>> collective){
         HashSet<Integer> meld = new HashSet<Integer>();
         for (int i = 0; i < set.size(); i++){
             meld.add(set.get(i));
@@ -55,7 +54,7 @@ public class Hand {
     * Helper for checkForWin--add all possible runs (straight flush of length 3+)
     * to the list of possible melds
     */
-    private void addOrderedSubsets(ArrayList<Integer> set, ArrayList<HashSet> collective){
+    private void addOrderedSubsets(ArrayList<Integer> set, ArrayList<HashSet<Integer>> collective){
         int n = set.size();
         for (int size = 3; size <= n; size++){
             for (int start = 0; start <= n - size; start++ ){
@@ -98,7 +97,7 @@ public class Hand {
 
         // create ArrayList of sets for possible melds 
         // HashSet<int>: which cards in the hand make up the meld)
-        ArrayList<HashSet> possible_melds = new ArrayList<HashSet>();
+        ArrayList<HashSet<Integer>> possible_melds = new ArrayList<HashSet<Integer>>();
 
         // check for 3 or 4 of a kind
         // add all possible sets to possible_melds
