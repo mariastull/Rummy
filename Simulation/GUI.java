@@ -102,14 +102,24 @@ public class GUI extends Application {
         // action item: when a button is selected, display "[card] selected"
 
         for(int i = 0; i < cards.size(); i++){
-            cards.get(i).setOnAction(new EventHandler<ActionEvent>() {
+
+            // int local_i = i;
+            // EventHandler<ActionEvent> event = x -> { drawButton.setText("Card " + local_i + " selected"); };
+            // cards.get(i).setOnAction(event);
+            
+            int local_i = i;
+            cards.get(i).setOnAction(event -> { drawButton.setText("Card " + local_i + " selected"); });
+
+            // cards.get(i).setOnAction(new EventHandler<ActionEvent>() {
+
+            //     int cardNum = i;
     
-                @Override
-                public void handle(ActionEvent e) {
-                    // this doesn't work, i is not in scope or something
-                    drawButton.setText("Card " + i + " selected");
-                }
-            });
+            //     @Override
+            //     public void handle(ActionEvent e) {
+            //         // this doesn't work, i is not in scope or something
+            //         drawButton.setText("Card " + cardNum + " selected");
+            //     }
+            // });
         }
 
         // button: "discard selected card"
