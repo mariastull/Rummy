@@ -2,6 +2,8 @@ package Players;
 
 import java.util.Scanner;
 
+import CardsAndPiles.Hand;
+
 /*
 CSCI 4448/5448 OOAD
 Lara Chunko, Maria Stull, Jake Swartwout
@@ -72,5 +74,10 @@ public class HumanPlayer extends Player {
     public void printHand(){
         System.out.println("Your hand:");
         super.printHand();
+    }
+
+    // TODO: add to UML
+    public Hand getHand(){
+        return hand;
     }
 }

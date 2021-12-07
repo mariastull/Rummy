@@ -8,9 +8,9 @@ import Buttons.Button;
 import Simulation.GameBoard;
 
 public class BoardDisplay implements ISubscriber<DisplayUpdate> {
-    GameBoard boardRef;
-    HumanPlayer userRef;
-    ArrayList<Button> buttons;
+    public GameBoard boardRef;
+    public HumanPlayer userRef;
+    public ArrayList<Button> buttons;
 
     public BoardDisplay(){
         boardRef = null;
@@ -31,6 +31,8 @@ public class BoardDisplay implements ISubscriber<DisplayUpdate> {
                 break;
             case HandUpdated:
                 // do something
+                // ArrayList<Button> cards = new ArrayList<Card>();
+                // for(Card card : sim.)
                 break;
             case DiscardUpdated:
                 // do something

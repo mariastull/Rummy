@@ -1,5 +1,9 @@
 package Simulation;
 
+import java.util.ArrayList;
+
+import CardsAndPiles.Card;
+import CardsAndPiles.Hand;
 import Display.BoardDisplay;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -76,37 +80,37 @@ public class GUI extends Application {
             }
         });
 
-        HBox cardBox = new HBox(10);
-       
-        // TODO: in final version, get card label from hand
-        // I also think it would make sense for the card buttons to be an array? 
-        Button card1 = new Button("(e.g.) Queen of Hearts");
-        Button card2 = new Button("Card 2");
-        Button card3 = new Button("Card 3");
-        Button card4 = new Button("Card 4");
-        Button card5 = new Button("Card 5");
-        Button card6 = new Button("Card 6");
-        Button card7 = new Button("Card 7");
+        Hand handRef = display.userRef.getHand();
 
-        cardBox.getChildren().add(card1);
-        cardBox.getChildren().add(card2);
-        cardBox.getChildren().add(card3);
-        cardBox.getChildren().add(card4);
-        cardBox.getChildren().add(card5);
-        cardBox.getChildren().add(card6);
-        cardBox.getChildren().add(card7);
+        HBox cardBox = new HBox(10);
+        
+        ArrayList<Button> cards = new ArrayList<Button>();
+        for(Card card : handRef.cards){
+            Button cardButton = new Button(card.getFormattedFullName());
+            cards.add(cardButton);
+            cardBox.getChildren().add(cardButton);
+        }
+
+        if(handRef.justDrawn != null){
+            Button cardButton = new Button(handRef.justDrawn.getFormattedFullName());
+            cards.add(cardButton);
+            cardBox.getChildren().add(cardButton);
+        }
 
         grid.add(cardBox, 1, 8);
 
         // action item: when a button is selected, display "[card] selected"
 
-        card1.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent e) {
-                drawButton.setText("Card 1 selected");
-            }
-        });
+        for(int i = 0; i < cards.size(); i++){
+            cards.get(i).setOnAction(new EventHandler<ActionEvent>() {
+    
+                @Override
+                public void handle(ActionEvent e) {
+                    // this doesn't work, i is not in scope or something
+                    drawButton.setText("Card " + i + " selected");
+                }
+            });
+        }
 
         // button: "discard selected card"
 
