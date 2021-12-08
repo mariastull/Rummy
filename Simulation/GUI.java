@@ -59,26 +59,11 @@ public class GUI extends Application {
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
 
-        DrawFromDiscardButton.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent e) {
-                actiontarget.setFill(Color.FIREBRICK);
-                actiontarget.setText("Draw from discard pressed");
-            }
-        });
+
 
         Button drawButton = new Button("Draw from deck");
         hbBtn.getChildren().add(drawButton);
 
-        drawButton.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent e) {
-                actiontarget.setFill(Color.PURPLE);
-                actiontarget.setText("Draw from deck button pressed");
-            }
-        });
 
         Hand handRef = display.userRef.getHand();
 
@@ -99,7 +84,13 @@ public class GUI extends Application {
 
         grid.add(cardBox, 1, 8);
 
-        // action item: when a button is selected, display "[card] selected"
+        HBox discardsBox = new HBox(10);
+        Button discardSelectedCardButton = new Button("Discard Selected Card");
+        Text cardToDiscard = new Text();
+        discardsBox.getChildren().add(discardSelectedCardButton);
+        discardsBox.getChildren().add(cardToDiscard);
+
+        grid.add(discardsBox, 1, 10);
 
         for(int i = 0; i < cards.size(); i++){
 
@@ -108,7 +99,7 @@ public class GUI extends Application {
             // cards.get(i).setOnAction(event);
             
             int local_i = i;
-            cards.get(i).setOnAction(event -> { drawButton.setText("Card " + local_i + " selected"); });
+            cards.get(i).setOnAction(event -> { cardToDiscard.setText("Card " + local_i + " selected to discard"); });
 
             // cards.get(i).setOnAction(new EventHandler<ActionEvent>() {
 
@@ -121,6 +112,47 @@ public class GUI extends Application {
             //     }
             // });
         }
+
+        HBox newCardBox = new HBox(10);
+        Text cardDrawn = new Text();
+        newCardBox.getChildren().add(cardDrawn);
+        grid.add(newCardBox, 1, 12);
+
+
+        DrawFromDiscardButton.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent e) {
+                actiontarget.setFill(Color.FIREBRICK);
+                actiontarget.setText("Draw from discard pressed");
+                // TODO: Display top of discard pile
+                // TODO: show new card in cardDrawn text box
+            }
+        });
+
+        drawButton.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent e) {
+                actiontarget.setFill(Color.PURPLE);
+                // TODO: draw show new card in cardDrawn text box
+                actiontarget.setText("Draw from deck button pressed");
+            }
+        });
+
+        discardSelectedCardButton.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e) {
+                // TODO: discard card
+                // TODO: update discardPile
+                // TODO: put new card in deck / update buttons
+                cardDrawn.setText("");
+                cardToDiscard.setText("");
+            }
+        });
+
+
+
 
         // button: "discard selected card"
 
