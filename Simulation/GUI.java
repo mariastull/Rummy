@@ -50,9 +50,13 @@ public class GUI extends Application {
         grid.add(scenetitle, 0, 0, 2, 1);
         
 
+        Text discardInfo = new Text("Top of discard:");
+        Text discardTop = new Text("<NONE>");
         Button DrawFromDiscardButton = new Button("Draw from discard");
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        hbBtn.getChildren().add(discardInfo);
+        hbBtn.getChildren().add(discardTop);
         hbBtn.getChildren().add(DrawFromDiscardButton);
         grid.add(hbBtn, 1, 4);
 
@@ -144,7 +148,6 @@ public class GUI extends Application {
             public void handle(ActionEvent e) {
                 actiontarget.setFill(Color.FIREBRICK);
                 actiontarget.setText("Draw from discard pressed");
-                // TODO: Display top of discard pile
                 String newCard = sim.drawCard(true);
                 cardDrawn.setText("Card drawn: " + newCard);
             }
@@ -156,7 +159,7 @@ public class GUI extends Application {
             public void handle(ActionEvent e) {
                 actiontarget.setFill(Color.PURPLE);
                 actiontarget.setText("Draw from deck button pressed");
-                String newCard = sim.drawCard(true);
+                String newCard = sim.drawCard(false);
                 cardDrawn.setText("Card drawn: " + newCard);
                 
             }
@@ -173,12 +176,14 @@ public class GUI extends Application {
                     for(int i = 0; i < cards.size(); i++){
                         cards.get(i).setText(handRef.cards[i].getFormattedFullName());
                     }
+                    discardTop.setText(sim.getDiscardTop());
                 }
                 // TODO: update discardPile
                // this is the end of the user's turn
                actiontarget.setText("Computer is playing");
                // TODO: display more info about computer's turn??
                sim.robotPlay();
+               discardTop.setText(sim.getDiscardTop());
                actiontarget.setText("Your turn");
             }
         });

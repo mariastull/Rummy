@@ -54,4 +54,8 @@ public class GameBoard {
         System.out.println("Discard pile's top:");
         System.out.println(discardPile.peekTopCard().getFormattedFullName());
     }
+
+    public String returnDiscardTop(){
+        return discardPile.peekTopCard().getFormattedFullName();
+    }
 }

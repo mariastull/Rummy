@@ -61,6 +61,10 @@ public class GameSimulator {
         robot.takeTurn();
     }
 
+    String getDiscardTop(){
+        return board.returnDiscardTop();
+    }
+
     void startGame() {
         // TODO: implement
         // display.drawBoard();
@@ -91,6 +95,7 @@ public class GameSimulator {
         }
         return "You lose :(";
     }
+
     
     void verifyWin() {
         DisplayUpdate update;

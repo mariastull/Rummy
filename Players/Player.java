@@ -71,7 +71,7 @@ public abstract class Player implements IPublisher<DisplayUpdate>{
     protected abstract int askCardDiscard();
 
     public final void publicDiscard(int cardToDiscard){
-        if (cardToDiscard<7 && cardToDiscard>0){
+        if (cardToDiscard<7 && cardToDiscard>=0){
             discardCard(cardToDiscard);
         }
     }
