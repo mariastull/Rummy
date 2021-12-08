@@ -53,6 +53,11 @@ public abstract class Player implements IPublisher<DisplayUpdate>{
     // overwrite this
     protected abstract boolean askCardChoice();
 
+    public final Card drawFromDeck(boolean isFromDiscard){
+        addCardToHand(isFromDiscard);
+        return hand.justDrawn;
+    }
+
     private final void addCardToHand(boolean isFromDiscard){
         if(isFromDiscard){
             hand.justDrawn = discardPileRef.takeTop();
@@ -64,6 +69,12 @@ public abstract class Player implements IPublisher<DisplayUpdate>{
     
     // overwrite this
     protected abstract int askCardDiscard();
+
+    public final void publicDiscard(int cardToDiscard){
+        if (cardToDiscard<7 && cardToDiscard>0){
+            discardCard(cardToDiscard);
+        }
+    }
 
     private final void discardCard(int cardToDiscard){
         Card discarded = hand.discard(cardToDiscard);

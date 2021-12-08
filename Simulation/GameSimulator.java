@@ -1,6 +1,7 @@
 package Simulation;
 import java.util.Random;
 
+import CardsAndPiles.Card;
 import Display.BoardDisplay;
 import Display.DisplayUpdate;
 import Players.HumanPlayer;
@@ -45,6 +46,15 @@ public class GameSimulator {
 
         Random rng = new Random();
         isPlayersTurn = rng.nextBoolean();
+    }
+
+    String drawCard(boolean isFromDiscard){
+        Card c = human.drawFromDeck(isFromDiscard);
+        return c.getFormattedFullName();
+    }
+
+    void discardCard(int cardToDiscard){
+        human.publicDiscard(cardToDiscard);
     }
 
     void startGame() {

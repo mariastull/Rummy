@@ -86,11 +86,16 @@ public class GUI extends Application {
 
         HBox discardsBox = new HBox(10);
         Button discardSelectedCardButton = new Button("Discard Selected Card");
-        Text cardToDiscard = new Text();
+        Text discardTextHelper1 = new Text("Card");
+        Text cardToDiscard = new Text("<NONE>");
+        Text discardTextHelper2 = new Text(" selected to Discard");
         discardsBox.getChildren().add(discardSelectedCardButton);
+        discardsBox.getChildren().add(discardTextHelper1);
         discardsBox.getChildren().add(cardToDiscard);
+        discardsBox.getChildren().add(discardTextHelper2);
 
         grid.add(discardsBox, 1, 10);
+        int discardIndex = -1;
 
         for(int i = 0; i < cards.size(); i++){
 
@@ -99,7 +104,7 @@ public class GUI extends Application {
             // cards.get(i).setOnAction(event);
             
             int local_i = i;
-            cards.get(i).setOnAction(event -> { cardToDiscard.setText("Card " + local_i + " selected to discard"); });
+            cards.get(i).setOnAction(event -> { cardToDiscard.setText("" + local_i); });
 
             // cards.get(i).setOnAction(new EventHandler<ActionEvent>() {
 
@@ -126,7 +131,8 @@ public class GUI extends Application {
                 actiontarget.setFill(Color.FIREBRICK);
                 actiontarget.setText("Draw from discard pressed");
                 // TODO: Display top of discard pile
-                // TODO: show new card in cardDrawn text box
+                String newCard = sim.drawCard(true);
+                cardDrawn.setText("Card drawn: " + newCard);
             }
         });
 
@@ -135,19 +141,28 @@ public class GUI extends Application {
             @Override
             public void handle(ActionEvent e) {
                 actiontarget.setFill(Color.PURPLE);
-                // TODO: draw show new card in cardDrawn text box
                 actiontarget.setText("Draw from deck button pressed");
+                String newCard = sim.drawCard(true);
+                cardDrawn.setText("Card drawn: " + newCard);
+                
             }
         });
 
         discardSelectedCardButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent e) {
-                // TODO: discard card
+                if(! cardToDiscard.getText().equals("<NONE")){
+                    int index = Integer.valueOf(cardToDiscard.getText());
+                    sim.discardCard(index);
+                    cardDrawn.setText("");
+                    cardToDiscard.setText("<NONE>");
+                    for(int i = 0; i < cards.size(); i++){
+                        cards.get(i).setText(handRef.cards[i].getFormattedFullName());
+                    }
+                }
                 // TODO: update discardPile
-                // TODO: put new card in deck / update buttons
-                cardDrawn.setText("");
-                cardToDiscard.setText("");
+               // this is the end of the user's turn
+               //TODO: switch to robot turn
             }
         });
 
