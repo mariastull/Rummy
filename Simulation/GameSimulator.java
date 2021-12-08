@@ -64,6 +64,9 @@ public class GameSimulator {
     String getDiscardTop(){
         return board.returnDiscardTop();
     }
+    String getComputerHand(){
+        return robot.returnHandText();
+    }
 
     void startGame() {
         // TODO: implement

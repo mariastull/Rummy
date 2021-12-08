@@ -120,6 +120,17 @@ public abstract class Player implements IPublisher<DisplayUpdate>{
         }
     }
 
+    public String returnHandText(){
+        String text = "";
+        for(int i = 0; i < Hand.HAND_SIZE; i++){
+            text = text + ("- " + (i+1) + ": " + hand.cards[i].getFormattedFullName());
+        }
+        if(hand.justDrawn != null){
+            text = text + ("- " + (Hand.HAND_SIZE+1) + ": " + hand.justDrawn.getFormattedFullName());
+        }
+        return text;
+    }
+
     /**
      * Checks if we ran out of cards in the draw pile and need to reshuffle the discard into the draw
      */

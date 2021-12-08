@@ -130,8 +130,10 @@ public class GUI extends Application {
         HBox endGameBox = new HBox(10);
         Button endGameButton = new Button("End game!");
         Text gameEndResult = new Text();
+        Text computerHand = new Text();
         endGameBox.getChildren().add(endGameButton);
         endGameBox.getChildren().add(gameEndResult);
+        endGameBox.getChildren().add(computerHand);
         grid.add(endGameBox, 1, 14);
 
         endGameButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -139,6 +141,7 @@ public class GUI extends Application {
             @Override
             public void handle(ActionEvent e) {
                 gameEndResult.setText(sim.GUIVerifyWin());
+                computerHand.setText("Computer's hand was: " + sim.getComputerHand());
             }
         });
 
@@ -178,10 +181,10 @@ public class GUI extends Application {
                     }
                     discardTop.setText(sim.getDiscardTop());
                 }
-                // TODO: update discardPile
                // this is the end of the user's turn
                actiontarget.setText("Computer is playing");
                // TODO: display more info about computer's turn??
+               // maybe in a text box
                sim.robotPlay();
                discardTop.setText(sim.getDiscardTop());
                actiontarget.setText("Your turn");
