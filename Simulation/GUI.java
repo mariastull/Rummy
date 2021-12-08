@@ -1,20 +1,24 @@
 package Simulation;
 
 import java.util.ArrayList;
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 import CardsAndPiles.Card;
 import CardsAndPiles.Hand;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.paint.*;
-import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.scene.text.*;
-// import javafx.scene.control.Button;
-// import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import javafx.geometry.Pos;
-import javafx.geometry.Insets;
 
 
 // TODO: add this entire file to the UML, the class and all of its functions are new
