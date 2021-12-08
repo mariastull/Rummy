@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import Observers.ISubscriber;
 import Players.HumanPlayer;
 import Buttons.Button;
+import Simulation.GUI;
 import Simulation.GameBoard;
 
 public class BoardDisplay implements ISubscriber<DisplayUpdate> {

@@ -1,10 +1,9 @@
-package Display;
+package Simulation;
 
 import java.util.ArrayList;
 
 import CardsAndPiles.Card;
 import CardsAndPiles.Hand;
-import Simulation.GameSimulator;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,9 +23,9 @@ import javafx.geometry.Insets;
  
 public class GUI extends Application {
 
-    // public static void main(String[] args) {
-    //     launch(args);
-    // }
+    public static void main(String[] args) {
+        launch(args);
+    }
     
     @Override
     public void start(Stage primaryStage) {
