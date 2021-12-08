@@ -123,6 +123,20 @@ public class GUI extends Application {
         newCardBox.getChildren().add(cardDrawn);
         grid.add(newCardBox, 1, 12);
 
+        HBox endGameBox = new HBox(10);
+        Button endGameButton = new Button("End game!");
+        Text gameEndResult = new Text();
+        endGameBox.getChildren().add(endGameButton);
+        endGameBox.getChildren().add(gameEndResult);
+        grid.add(endGameBox, 1, 14);
+
+        endGameButton.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent e) {
+                gameEndResult.setText(sim.GUIVerifyWin());
+            }
+        });
 
         DrawFromDiscardButton.setOnAction(new EventHandler<ActionEvent>() {
  
@@ -162,7 +176,10 @@ public class GUI extends Application {
                 }
                 // TODO: update discardPile
                // this is the end of the user's turn
-               //TODO: switch to robot turn
+               actiontarget.setText("Computer is playing");
+               // TODO: display more info about computer's turn??
+               sim.robotPlay();
+               actiontarget.setText("Your turn");
             }
         });
 

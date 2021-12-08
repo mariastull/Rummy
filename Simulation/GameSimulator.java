@@ -57,6 +57,10 @@ public class GameSimulator {
         human.publicDiscard(cardToDiscard);
     }
 
+    void robotPlay(){
+        robot.takeTurn();
+    }
+
     void startGame() {
         // TODO: implement
         // display.drawBoard();
@@ -74,6 +78,18 @@ public class GameSimulator {
         //     // switch turns
         //     isPlayersTurn = !isPlayersTurn;
         // }
+    }
+
+    public String GUIVerifyWin(){
+        boolean humanWon = human.hasWinningHand();
+        boolean robotWon = robot.hasWinningHand();
+        if(humanWon){
+            if(robotWon){
+                return "It's a tie!";
+            }
+            return "You win!!";
+        }
+        return "You lose :(";
     }
     
     void verifyWin() {
