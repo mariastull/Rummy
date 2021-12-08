@@ -40,8 +40,8 @@ public class GUI extends Application {
     
     @Override
     public void start(Stage primaryStage) {
+        // make sure the simulator itself is set up
         sim = new GameSimulator();
-        sim.setupNewGame();
         
         // setting the window's title
         primaryStage.setTitle("OOAD Rummy");
@@ -50,9 +50,10 @@ public class GUI extends Application {
         GridPane grid = createBaseGrid();
 
 
+
         // Set up each row of our display
 
-        // the computer's blank cards
+        // Row 1: the computer's blank cards
         // need the # of cards in a hand
         robotCardButtons = new ArrayList<Button>();
         for(int i = 0; i < Hand.HAND_SIZE; i++){
@@ -65,7 +66,8 @@ public class GUI extends Application {
         computerCardsBox.getChildren().addAll(robotCardButtons);
         grid.addRow(1, computerCardsBox);
         
-        // The game title in the middle
+
+        // Row 2: The game title in the middle
         Text sceneTitleText = new Text("Rummy");
         sceneTitleText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));
 
@@ -74,7 +76,7 @@ public class GUI extends Application {
         grid.addRow(2, sceneTitle);
         
 
-        // The draw and discard piles
+        // Row 3: The draw and discard piles
         discardPile = buildCardButton(sim.board.discardPile.peekTopCard());
         discardPile.setOnAction(event -> { performDraw(true); });
         
@@ -87,7 +89,7 @@ public class GUI extends Application {
         grid.addRow(3, discardPileRow);
 
 
-        // the card we just drew
+        // Row 4: the card we just drew
         cardDrawn = buildCardButton(null);
         cardDrawn.setVisible(false);
         cardDrawn.setDisable(true);
@@ -98,7 +100,7 @@ public class GUI extends Application {
         grid.addRow(4, newCardRow);
 
 
-        // the user's hand
+        // Row 5: the user's hand
         userCardButtons = new ArrayList<Button>();
         for(int i = 0; i < Hand.HAND_SIZE; i++){
             // generate a bunch of empty cards
@@ -115,7 +117,7 @@ public class GUI extends Application {
         grid.addRow(5, cardBox);
 
 
-        // a button to end the game
+        // Row 6: a button to end the game
         endGameButton = new Button("End Game");
         endGameButton.setOnAction(event -> { endGame(); });
 
@@ -124,7 +126,7 @@ public class GUI extends Application {
         grid.addRow(6, endGameBox);
 
 
-        // various tips for the user
+        // Row 7: various tips for the user
         tipBox = new Text("test");
         tipBox.setStyle("-fx-font-size: 10pt;");
         HBox tipBoxBox = new HBox(tipBox);
@@ -144,6 +146,10 @@ public class GUI extends Application {
 
 
 
+    /**
+     * Builds a base grid pane for us to work with and add rows to
+     * @return a GridPane object for to add Nodes to
+     */
     public GridPane createBaseGrid(){
         // creating a grid to place our elements on
         GridPane grid = new GridPane();
@@ -166,6 +172,11 @@ public class GUI extends Application {
     }
 
 
+    /**
+     * given a card (or null), build out a button that looks like a card
+     * @param card the input card to base the button on, or null for an empty card
+     * @return a Button object representing our card
+     */
     public Button buildCardButton(Card card){
         Button cardButton;
         if(card != null){
@@ -184,6 +195,10 @@ public class GUI extends Application {
     }
 
 
+    /**
+     * disable/enable clicking interactions on all of the cards in our hand
+     * @param disable whether we should disable them, or not (meaning enable them)
+     */
     public void disableDiscard(boolean disable){
         for(Button cardButton : userCardButtons){
             cardButton.setDisable(disable);
@@ -191,12 +206,19 @@ public class GUI extends Application {
     }
 
 
+    /**
+     * disable/enable clicking interactions on the two draw piles (draw and discard piles)
+     * @param disable whether we should disable them, or not (meaning enable them)
+     */
     public void disableDraw(boolean disable){
         drawPile.setDisable(disable);
         discardPile.setDisable(disable);
     }
 
 
+    /**
+     * Update the visual display of the player's hand to match what they actually have
+     */
     public void updatePlayerHand(){
         Card[] hand = sim.human.getHand().cards;
         for(int i = 0; i < Hand.HAND_SIZE; i++){
@@ -205,6 +227,12 @@ public class GUI extends Application {
     }
 
 
+    /**
+     * given which card the user wants, do all of the necessary actions to interpret their click
+     * and route the necessary data. Includes switching what they can click on, changing
+     * the tip box, and actually telling the sim what card we want to draw.
+     * @param fromDiscard true to take from the discard pile, false to take from the draw pile
+     */
     public void performDraw(boolean fromDiscard){
         String newCard = sim.asyncDrawCard(fromDiscard);
         cardDrawn.setText(newCard);
@@ -216,6 +244,12 @@ public class GUI extends Application {
     }
 
 
+    /**
+     * given which card the user wants, perform all the necessary actions to discard that one.
+     * Includes telling the simulation which one, updating their hand with the new info, disabling
+     * the discard clicking, and letting the robot take their turn.
+     * @param which which card the user wants to discard, 0-6 for one in their hand, 7 for the justDrawn
+     */
     public void performDiscard(int which){
         sim.asyncDiscardCard(which);
         disableDiscard(true);
@@ -232,6 +266,9 @@ public class GUI extends Application {
     }
 
 
+    /**
+     * completely wipe everything and set up a new game for the player
+     */
     public void startNewGame(){
         endGameButton.setText("End Game");
         endGameButton.setOnAction(event -> { endGame(); });
@@ -253,6 +290,9 @@ public class GUI extends Application {
     }
 
 
+    /**
+     * call for the end of the game, stopping all moves and checking scores
+     */
     public void endGame(){
         disableDiscard(true);
         disableDraw(true);
