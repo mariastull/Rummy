@@ -39,6 +39,7 @@ public class Card{
         return valueName;
     }
 
+    // TODO: update in UML the params to this
     public String getFormattedFullName(boolean textBased) {
         if(textBased){
             return getFormattedValue() + " of " + suit; 

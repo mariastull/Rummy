@@ -31,6 +31,7 @@ public abstract class Player {
         drawPileRef = drawRef;
     }
 
+    // TODO: update in UML that this has a param
     public final boolean takeTurn(boolean textBased) {
         boolean cardChoice = askCardChoice();
         if(textBased){

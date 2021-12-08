@@ -16,7 +16,8 @@ import javafx.stage.Stage;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 
- 
+
+// TODO: add this entire file to the UML, the class and all of its functions are new
 public class GUI extends Application {
 
     ArrayList<Button> robotCardButtons;

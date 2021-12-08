@@ -33,27 +33,33 @@ public class GameSimulator {
         robot.setPileRefs(board.discardPile, board.drawPile);
     }
 
+    // TODO: add this to UML
     String asyncDrawCard(boolean isFromDiscard){
         Card c = human.drawFromDeck(isFromDiscard);
         return c.getFormattedFullName(false);
     }
 
+    // TODO: add this to UML
     void asyncDiscardCard(int cardToDiscard){
         human.discardCard(cardToDiscard);
     }
 
+    // TODO: add this to UML
     void asyncRobotPlay(){
         robot.takeTurn(false);
     }
 
+    // TODO: add this to UML
     String getDiscardTop(){
-        return board.returnDiscardTop();
+        return board.getDiscardTop();
     }
 
+    // TODO: add this to UML
     Card[] getComputerHand(){
         return robot.seeCards();
     }
 
+    // TODO: add/rename this in the UML
     public String getGameResults(){
         boolean humanWon = human.hasWinningHand();
         boolean robotWon = robot.hasWinningHand();
@@ -115,6 +121,8 @@ public class GameSimulator {
                 System.out.println("Robot's turn:");
                 shouldEnd = sim.robot.takeTurn(true);
             }
+
+            playersTurn = !playersTurn;
         }
 
         System.out.println(sim.getGameResults());

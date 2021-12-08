@@ -55,8 +55,8 @@ public class HumanPlayer extends Player {
                 System.out.println("Please choose a number that's 1 or greater");
                 continue;
             }
-            if(input > 7){
-                System.out.println("Please choose a number that's 5 or less");
+            if(input > Hand.HAND_SIZE+1){
+                System.out.println("Please choose a number that's " + (Hand.HAND_SIZE+1) + " or less");
                 continue;
             }
             inputValid = true;
@@ -76,7 +76,6 @@ public class HumanPlayer extends Player {
         super.printHand();
     }
 
-    // TODO: add to UML
     public Hand getHand(){
         return hand;
     }
