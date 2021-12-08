@@ -28,10 +28,6 @@ public class CardPile {
     }
 
     public Card peekTopCard() {
-        System.out.println("pile has: "  + cards.size());
-        for(Card card : cards){
-            System.out.println(card.getFormattedFullName());
-        }
         return cards.get(0);
     }
 
@@ -43,10 +39,6 @@ public class CardPile {
 
     public void discardCard(Card toDiscard) {
         cards.add(0, toDiscard);
-        System.out.println("After discard, now have " + cards.size());
-        for(Card card : cards){
-            System.out.println(card.getFormattedFullName());
-        }
     }
 
 }

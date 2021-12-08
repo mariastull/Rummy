@@ -39,7 +39,11 @@ public class Card{
         return valueName;
     }
 
-    public String getFormattedFullName() {
-        return getFormattedValue() + "\nof\n" + suit;
+    public String getFormattedFullName(boolean textBased) {
+        if(textBased){
+            return getFormattedValue() + " of " + suit; 
+        } else {
+            return getFormattedValue() + "\nof\n" + suit;
+        }
     }
 }

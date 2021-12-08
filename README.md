@@ -6,4 +6,4 @@ Built by Lara Chunko, Maria Stull, and Jake Swartwout
 
 Implementing the card game "Rummy"
 
-This version runs in the terminal as a texted based simulation.
+This version runs either in the terminal as a text based simulation or through JavaFX in an interactive GUI

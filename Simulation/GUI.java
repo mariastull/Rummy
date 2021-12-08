@@ -164,7 +164,7 @@ public class GUI extends Application {
     public Button buildCardButton(Card card){
         Button cardButton;
         if(card != null){
-            cardButton = new Button(card.getFormattedFullName());
+            cardButton = new Button(card.getFormattedFullName(false));
         } else {
             cardButton = new Button();
         }
@@ -195,13 +195,13 @@ public class GUI extends Application {
     public void updatePlayerHand(){
         Card[] hand = sim.human.getHand().cards;
         for(int i = 0; i < Hand.HAND_SIZE; i++){
-            userCardButtons.get(i).setText(hand[i].getFormattedFullName());
+            userCardButtons.get(i).setText(hand[i].getFormattedFullName(false));
         }
     }
 
 
     public void performDraw(boolean fromDiscard){
-        String newCard = sim.drawCard(fromDiscard);
+        String newCard = sim.asyncDrawCard(fromDiscard);
         cardDrawn.setText(newCard);
         cardDrawn.setVisible(true);
         cardDrawn.setDisable(false);
@@ -212,14 +212,14 @@ public class GUI extends Application {
 
 
     public void performDiscard(int which){
-        sim.discardCard(which);
+        sim.asyncDiscardCard(which);
         disableDiscard(true);
 
         updatePlayerHand();
         cardDrawn.setVisible(false);
         cardDrawn.setDisable(true);
         
-        sim.robotPlay();
+        sim.asyncRobotPlay();
         discardPile.setText(sim.getDiscardTop());
 
         disableDraw(false);
@@ -241,7 +241,7 @@ public class GUI extends Application {
 
         tipBox.setText("Tips show up here! Start by choosing from either the draw pile or discard pile");
 
-        discardPile.setText(sim.board.discardPile.peekTopCard().getFormattedFullName());
+        discardPile.setText(sim.getDiscardTop());
 
         disableDraw(false);
         disableDiscard(true);
@@ -251,11 +251,11 @@ public class GUI extends Application {
     public void endGame(){
         disableDiscard(true);
         disableDraw(true);
-        tipBox.setText("Game is over! " + sim.GUIVerifyWin());
+        tipBox.setText("Game is over! " + sim.getGameResults());
         Card[] hand = sim.getComputerHand();
         for(int i = 0; i < Hand.HAND_SIZE; i++){
             Button robotCard = robotCardButtons.get(i);
-            robotCard.setText(hand[i].getFormattedFullName());
+            robotCard.setText(hand[i].getFormattedFullName(false));
         }
         // set the button up now to restart the game
         endGameButton.setText("Restart Game");

@@ -54,10 +54,10 @@ public class GameBoard {
 
     public void printDiscardTop(){
         System.out.println("Discard pile's top:");
-        System.out.println(discardPile.peekTopCard().getFormattedFullName());
+        System.out.println(discardPile.peekTopCard().getFormattedFullName(true));
     }
 
     public String returnDiscardTop(){
-        return discardPile.peekTopCard().getFormattedFullName();
+        return discardPile.peekTopCard().getFormattedFullName(false);
     }
 }
