@@ -4,6 +4,7 @@ import java.util.Random;
 import CardsAndPiles.Card;
 import Display.BoardDisplay;
 import Display.DisplayUpdate;
+import Display.GUI;
 import Players.HumanPlayer;
 import Players.RobotPlayer;
 
@@ -127,12 +128,18 @@ public class GameSimulator {
         display.giveUpdate(update);
     }
 
-    // public static void main(String[] args){
-    //     GameSimulator sim = new GameSimulator();
-    //     BoardDisplay display = new BoardDisplay();
-    //     sim.linkToDisplay(display);
-    //     sim.setupNewGame();
-    //     sim.startGame();
-    //     sim.verifyWin();
-    // }
+    public static void main(String[] args){
+        GameSimulator sim = new GameSimulator();
+        BoardDisplay display = new BoardDisplay();
+
+        sim.linkToDisplay(display);
+
+        GUI.launch(args);
+
+        sim.setupNewGame();
+        
+        sim.startGame();
+        
+        // sim.verifyWin();
+    }
 }

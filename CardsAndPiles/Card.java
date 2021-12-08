@@ -40,6 +40,6 @@ public class Card{
     }
 
     public String getFormattedFullName() {
-        return getFormattedValue() + " of " + suit;
+        return getFormattedValue() + "\nof\n" + suit;
     }
 }

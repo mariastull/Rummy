@@ -8,14 +8,16 @@ import Buttons.Button;
 import Simulation.GameBoard;
 
 public class BoardDisplay implements ISubscriber<DisplayUpdate> {
+
+    public GUI gui;
     public GameBoard boardRef;
     public HumanPlayer userRef;
-    public ArrayList<Button> buttons;
+    public ArrayList<Button> cardButtons;
 
     public BoardDisplay(){
         boardRef = null;
         userRef = null;
-        buttons = new ArrayList<Button>();
+        cardButtons = null;
     }
 
     public void updateRefs(GameBoard boardRef, HumanPlayer userRef){
