@@ -31,7 +31,7 @@ public class GameSimulator {
     }
 
     void setupNewGame() {
-        board.drawPile.shufflePile();
+        board = new GameBoard();
         
         human.setupHand(board.getStartingHand());
         human.setPileRefs(board.discardPile, board.drawPile);
@@ -48,7 +48,7 @@ public class GameSimulator {
     }
 
     void discardCard(int cardToDiscard){
-        human.publicDiscard(cardToDiscard);
+        human.discardCard(cardToDiscard);
     }
 
     void robotPlay(){
@@ -101,20 +101,5 @@ public class GameSimulator {
         }
 
         display.giveUpdate(update);
-    }
-
-    public static void main(String[] args){
-        GameSimulator sim = new GameSimulator();
-        BoardDisplay display = new BoardDisplay();
-
-        sim.linkToDisplay(display);
-
-        GUI.launch(args);
-
-        // sim.setupNewGame();
-        
-        // sim.startGame();
-        
-        // sim.verifyWin();
     }
 }

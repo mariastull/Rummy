@@ -43,6 +43,10 @@ public class CardPile {
 
     public void discardCard(Card toDiscard) {
         cards.add(0, toDiscard);
+        System.out.println("After discard, now have " + cards.size());
+        for(Card card : cards){
+            System.out.println(card.getFormattedFullName());
+        }
     }
 
 }

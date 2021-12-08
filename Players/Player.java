@@ -70,13 +70,7 @@ public abstract class Player implements IPublisher<DisplayUpdate>{
     // overwrite this
     protected abstract int askCardDiscard();
 
-    public final void publicDiscard(int cardToDiscard){
-        if (cardToDiscard<7 && cardToDiscard>=0){
-            discardCard(cardToDiscard);
-        }
-    }
-
-    private final void discardCard(int cardToDiscard){
+    public final void discardCard(int cardToDiscard){
         Card discarded = hand.discard(cardToDiscard);
         discardPileRef.discardCard(discarded);
     }

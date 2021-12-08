@@ -235,6 +235,10 @@ public class GUI extends Application {
 
         updatePlayerHand();
 
+        for(Button robotCard : robotCardButtons){
+            robotCard.setText("");
+        }
+
         tipBox.setText("Tips show up here! Start by choosing from either the draw pile or discard pile");
 
         discardPile.setText(sim.board.discardPile.peekTopCard().getFormattedFullName());

@@ -39,6 +39,8 @@ public class GameBoard {
         // create the piles now
         drawPile = new CardPile(deck);
         discardPile = new CardPile(oneCard);
+
+        drawPile.shufflePile();
     }
 
     public Card[] getStartingHand() {
