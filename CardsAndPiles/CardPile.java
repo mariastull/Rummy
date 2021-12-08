@@ -28,6 +28,10 @@ public class CardPile {
     }
 
     public Card peekTopCard() {
+        System.out.println("pile has: "  + cards.size());
+        for(Card card : cards){
+            System.out.println(card.getFormattedFullName());
+        }
         return cards.get(0);
     }
 

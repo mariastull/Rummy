@@ -121,4 +121,8 @@ public class RobotPlayer extends Player {
         System.out.println("The robot's hand:");
         super.printHand();
     }
+    
+    public Card[] seeCards(){
+        return hand.cards;
+    }
 }

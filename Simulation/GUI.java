@@ -5,12 +5,8 @@ import java.util.ArrayList;
 import CardsAndPiles.Card;
 import CardsAndPiles.Hand;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-// import javafx.scene.*;
 import javafx.scene.Scene;
 import javafx.scene.paint.*;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.text.*;
@@ -23,166 +19,147 @@ import javafx.geometry.Insets;
  
 public class GUI extends Application {
 
+    ArrayList<Button> robotCardButtons;
+    Button discardPile;
+    Button drawPile;
+    Button cardDrawn;
+    ArrayList<Button> userCardButtons;
+    Text tipBox;
+    Button endGameButton;
+    
+    GameSimulator sim;
+
     public static void main(String[] args) {
         launch(args);
     }
     
     @Override
     public void start(Stage primaryStage) {
+        sim = new GameSimulator();
+        sim.setupNewGame();
         
         // setting the window's title
         primaryStage.setTitle("OOAD Rummy");
         
         // creating a grid to place our elements on
-        GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
-        // grid.setHgap(10);
-        grid.setVgap(10);
-        // grid.setPadding(new Insets(25, 25, 25, 25));
+        GridPane grid = createBaseGrid();
+
+
+        // Set up each row of our display
+
+        // the computer's blank cards
+        // need the # of cards in a hand
+        robotCardButtons = new ArrayList<Button>();
+        for(int i = 0; i < Hand.HAND_SIZE; i++){
+            Button blankComputerCard = buildCardButton(null);
+            blankComputerCard.setDisable(true);
+            robotCardButtons.add(blankComputerCard);
+        }
+        // put them into the hbox then in the grid
+        HBox computerCardsBox = new HBox(10);
+        computerCardsBox.getChildren().addAll(robotCardButtons);
+        grid.addRow(1, computerCardsBox);
         
-        // Placing a title on the screen
+        // The game title in the middle
         Text sceneTitleText = new Text("Rummy");
-        sceneTitleText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        sceneTitleText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));
+
         HBox sceneTitle = new HBox(sceneTitleText);
         sceneTitle.setAlignment(Pos.CENTER);
         grid.addRow(2, sceneTitle);
         
-        // build out the draw and discard piles
-        Button discardPile = buildCardButton(display.boardRef.discardPile.peekTopCard());
-        Button drawPile = buildCardButton(null);
+
+        // The draw and discard piles
+        discardPile = buildCardButton(sim.board.discardPile.peekTopCard());
+        discardPile.setOnAction(event -> { performDraw(true); });
+        
+        drawPile = buildCardButton(null);
         drawPile.setText("Draw\nPile");
+        drawPile.setOnAction(event -> { performDraw(false); });
+
         HBox discardPileRow = new HBox(10, drawPile, discardPile);
         discardPileRow.setAlignment(Pos.CENTER);
         grid.addRow(3, discardPileRow);
 
-        // final Text actiontarget = new Text();
-        // grid.add(actiontarget, 1, 6);
-
-        // set up the user's hand
-        Hand handRef = display.userRef.getHand();
-        
-        ArrayList<Button> cardButtons = new ArrayList<Button>();
-        for(Card card : handRef.cards){
-            cardButtons.add(buildCardButton(card));
-        }
-
-        // link up all of the cards in our hand to the discard pile
-        for(int i = 0; i < cardButtons.size(); i++){
-            cardButtons.get(i).setOnAction(event -> { sim.discardCard(i); });
-        }
-
-        HBox cardBox = new HBox(10);
-        cardBox.getChildren().addAll(cardButtons);
-        grid.addRow(5, cardBox);
-
-        // the discard pile
-        // HBox discardsBox = new HBox(10);
-        // Button discardSelectedCardButton = new Button("Discard Selected Card");
-        // Text discardTextHelper1 = new Text("Card");
-        // Text cardToDiscard = new Text("<NONE>");
-        // Text discardTextHelper2 = new Text(" selected to Discard");
-        // discardsBox.getChildren().add(discardSelectedCardButton);
-        // discardsBox.getChildren().add(discardTextHelper1);
-        // discardsBox.getChildren().add(cardToDiscard);
-        // discardsBox.getChildren().add(discardTextHelper2);
-
-        // grid.add(discardsBox, 1, 10);
-
-        
 
         // the card we just drew
-        Button cardDrawn = buildCardButton(null);
+        cardDrawn = buildCardButton(null);
         cardDrawn.setVisible(false);
         cardDrawn.setDisable(true);
+        cardDrawn.setOnAction(event -> { performDiscard(Hand.HAND_SIZE); });
+
         HBox newCardRow = new HBox(cardDrawn);
         newCardRow.setAlignment(Pos.CENTER);
         grid.addRow(4, newCardRow);
 
+
+        // the user's hand
+        userCardButtons = new ArrayList<Button>();
+        for(int i = 0; i < Hand.HAND_SIZE; i++){
+            // generate a bunch of empty cards
+            Button userCard = buildCardButton(null);
+            // link them all up to the discard functionality
+            int local_i = i;
+            userCard.setOnAction(event -> { performDiscard(local_i); });
+            // and keep a list of them all
+            userCardButtons.add(userCard);   
+        }
+
+        HBox cardBox = new HBox(10);
+        cardBox.getChildren().addAll(userCardButtons);
+        grid.addRow(5, cardBox);
+
+
         // a button to end the game
-        Button endGameButton = new Button("End Game");
-        HBox endGameBox = new HBox(10);
-        endGameBox.getChildren().add(endGameButton);
+        endGameButton = new Button("End Game");
+        endGameButton.setOnAction(event -> { endGame(); });
+
+        HBox endGameBox = new HBox(endGameButton);
         endGameBox.setAlignment(Pos.CENTER_RIGHT);
         grid.addRow(6, endGameBox);
 
-        // endGameButton.setOnAction(new EventHandler<ActionEvent>() {
- 
-        //     @Override
-        //     public void handle(ActionEvent e) {
-        //         gameEndResult.setText(sim.GUIVerifyWin());
-        //         computerHand.setText("Computer's hand was: " + sim.getComputerHand());
-        //     }
-        // });
 
-        // now that we have our references, we can create the actions between them
-
-        discardPile.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent e) {
-                String newCard = sim.drawCard(true);
-                cardDrawn.setText("Card drawn: " + newCard);
-            }
-        });
-
-        drawPile.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent e) {
-                String newCard = sim.drawCard(false);
-                cardDrawn.setText("Card drawn: " + newCard);
-                
-            }
-        });
-
-        discardSelectedCardButton.setOnAction(new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(ActionEvent e) {
-                if(! cardToDiscard.getText().equals("<NONE")){
-                    int index = Integer.valueOf(cardToDiscard.getText());
-                    sim.discardCard(index);
-                    cardDrawn.setText("");
-                    cardToDiscard.setText("<NONE>");
-                    for(int i = 0; i < cardButtons.size(); i++){
-                        cardButtons.get(i).setText(handRef.cards[i].getFormattedFullName());
-                    }
-                }
-               // this is the end of the user's turn
-               // TODO: display more info about computer's turn??
-               // maybe in a text box
-               sim.robotPlay();
-            }
-        });
+        // various tips for the user
+        tipBox = new Text("test");
+        tipBox.setStyle("-fx-font-size: 10pt;");
+        HBox tipBoxBox = new HBox(tipBox);
+        tipBoxBox.setAlignment(Pos.CENTER);
+        grid.addRow(7, tipBoxBox);
 
 
 
+        // start up a new game
+        startNewGame();
 
-        // button: "discard selected card"
-
-        // Grey out buttons? How to 
-
-
+        // Finish and display our scene
         Scene scene = new Scene(grid, 600, 600);
-       
-        // create a background fill
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+
+
+    public GridPane createBaseGrid(){
+        // creating a grid to place our elements on
+        GridPane grid = new GridPane();
+
+        grid.setAlignment(Pos.CENTER);
+        
+        // only working with rows, so only need veritcal gap
+        grid.setVgap(20);
+
+        // background fill color
         BackgroundFill background_fill = new BackgroundFill(
             Color.GRAY,
             CornerRadii.EMPTY,
             Insets.EMPTY
         );
-
-        // create Background
         Background background = new Background(background_fill);
-
-        // set background
         grid.setBackground(background);
 
-
-        primaryStage.setScene(scene);
-
-        primaryStage.show();
-    
+        return grid;
     }
+
 
     public Button buildCardButton(Card card){
         Button cardButton;
@@ -199,5 +176,85 @@ public class GUI extends Application {
             + "-fx-background-color: white; "
         );
         return cardButton;
+    }
+
+
+    public void disableDiscard(boolean disable){
+        for(Button cardButton : userCardButtons){
+            cardButton.setDisable(disable);
+        }
+    }
+
+
+    public void disableDraw(boolean disable){
+        drawPile.setDisable(disable);
+        discardPile.setDisable(disable);
+    }
+
+
+    public void updatePlayerHand(){
+        Card[] hand = sim.human.getHand().cards;
+        for(int i = 0; i < Hand.HAND_SIZE; i++){
+            userCardButtons.get(i).setText(hand[i].getFormattedFullName());
+        }
+    }
+
+
+    public void performDraw(boolean fromDiscard){
+        String newCard = sim.drawCard(fromDiscard);
+        cardDrawn.setText(newCard);
+        cardDrawn.setVisible(true);
+        cardDrawn.setDisable(false);
+        disableDiscard(false);
+        disableDraw(true);
+        tipBox.setText("Which card would you like to discard?");
+    }
+
+
+    public void performDiscard(int which){
+        sim.discardCard(which);
+        disableDiscard(true);
+
+        updatePlayerHand();
+        cardDrawn.setVisible(false);
+        cardDrawn.setDisable(true);
+        
+        sim.robotPlay();
+        discardPile.setText(sim.getDiscardTop());
+
+        disableDraw(false);
+        tipBox.setText("It is your turn, pick a card from either the draw pile or discard pile");
+    }
+
+
+    public void startNewGame(){
+        endGameButton.setText("End Game");
+        endGameButton.setOnAction(event -> { endGame(); });
+
+        sim.setupNewGame();
+
+        updatePlayerHand();
+
+        tipBox.setText("Tips show up here! Start by choosing from either the draw pile or discard pile");
+
+        discardPile.setText(sim.board.discardPile.peekTopCard().getFormattedFullName());
+
+        disableDraw(false);
+        disableDiscard(true);
+    }
+
+
+    public void endGame(){
+        disableDiscard(true);
+        disableDraw(true);
+        tipBox.setText("Game is over! " + sim.GUIVerifyWin());
+        Card[] hand = sim.getComputerHand();
+        for(int i = 0; i < Hand.HAND_SIZE; i++){
+            Button robotCard = robotCardButtons.get(i);
+            robotCard.setText(hand[i].getFormattedFullName());
+        }
+        // set the button up now to restart the game
+        endGameButton.setText("Restart Game");
+        endGameButton.setOnAction(event -> { startNewGame(); });
     }
 }

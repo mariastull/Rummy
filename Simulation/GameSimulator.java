@@ -1,5 +1,4 @@
 package Simulation;
-import java.util.Random;
 
 import CardsAndPiles.Card;
 import Display.BoardDisplay;
@@ -14,11 +13,9 @@ Project 6-7
 */
 
 public class GameSimulator {
-    private GameBoard board;
-    private HumanPlayer human;
-    private RobotPlayer robot;
-
-    private boolean isPlayersTurn;
+    public GameBoard board;
+    public HumanPlayer human;
+    public RobotPlayer robot;
     
     private BoardDisplay display;
 
@@ -43,9 +40,6 @@ public class GameSimulator {
         robot.setupHand(board.getStartingHand());
         robot.setPileRefs(board.discardPile, board.drawPile);
         robot.setSubscriber(display);
-
-        Random rng = new Random();
-        isPlayersTurn = rng.nextBoolean();
     }
 
     String drawCard(boolean isFromDiscard){
@@ -64,27 +58,9 @@ public class GameSimulator {
     String getDiscardTop(){
         return board.returnDiscardTop();
     }
-    String getComputerHand(){
-        return robot.returnHandText();
-    }
 
-    void startGame() {
-        // TODO: implement
-        // display.drawBoard();
-        // boolean endCalled = false;
-        // while(!endCalled) {
-        //     System.out.println("----------------------");
-        //     // let them take their turn
-        //     if(isPlayersTurn){
-        //         display.giveUpdate(DisplayUpdate.ShowIsPlayerTurn);
-        //         endCalled = human.takeTurn();
-        //     } else {
-        //         display.giveUpdate(DisplayUpdate.ShowIsComputerTurn);
-        //         endCalled = robot.takeTurn();
-        //     }
-        //     // switch turns
-        //     isPlayersTurn = !isPlayersTurn;
-        // }
+    Card[] getComputerHand(){
+        return robot.seeCards();
     }
 
     public String GUIVerifyWin(){
