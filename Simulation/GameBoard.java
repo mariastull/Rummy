@@ -39,6 +39,8 @@ public class GameBoard {
         // create the piles now
         drawPile = new CardPile(deck);
         discardPile = new CardPile(oneCard);
+
+        drawPile.shufflePile();
     }
 
     public Card[] getStartingHand() {
@@ -50,4 +52,14 @@ public class GameBoard {
         return myHand;
     }
 
+    // TODO: add this to UML? maybe not
+    public void printDiscardTop(){
+        System.out.println("Discard pile's top:");
+        System.out.println(discardPile.peekTopCard().getFormattedFullName(true));
+    }
+
+    // TODO: add this to UML
+    public String getDiscardTop(){
+        return discardPile.peekTopCard().getFormattedFullName(false);
+    }
 }

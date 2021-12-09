@@ -24,7 +24,7 @@ public class Card{
             case 1:
                 valueName = "Ace";
                 break;
-            case 11: 
+            case 11:
                 valueName = "Jack";
                 break;
             case 12:
@@ -39,7 +39,12 @@ public class Card{
         return valueName;
     }
 
-    public String getFormattedFullName() {
-        return getFormattedValue() + " of " + suit;
+    // TODO: update in UML the params to this
+    public String getFormattedFullName(boolean textBased) {
+        if(textBased){
+            return getFormattedValue() + " of " + suit; 
+        } else {
+            return getFormattedValue() + "\nof\n" + suit;
+        }
     }
 }

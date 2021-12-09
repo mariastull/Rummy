@@ -3,9 +3,6 @@ package Players;
 import CardsAndPiles.Card;
 import CardsAndPiles.CardPile;
 import CardsAndPiles.Hand;
-import Observers.IPublisher;
-import Observers.ISubscriber;
-import Display.DisplayUpdate;
 
 /*
 CSCI 4448/5448 OOAD
@@ -13,12 +10,10 @@ Lara Chunko, Maria Stull, Jake Swartwout
 Project 6-7
 */
 
-public abstract class Player implements IPublisher<DisplayUpdate>{
+public abstract class Player {
     protected Hand hand;
     protected CardPile discardPileRef;
     protected CardPile drawPileRef;
-
-    private ISubscriber<DisplayUpdate> subscriber;
 
     public Player(){
         hand = new Hand();
@@ -36,31 +31,47 @@ public abstract class Player implements IPublisher<DisplayUpdate>{
         drawPileRef = drawRef;
     }
 
-    public boolean takeTurn() {
+    // TODO: update in UML that this has a param
+    public final boolean takeTurn(boolean textBased) {
         boolean cardChoice = askCardChoice();
+        if(textBased){
+            if(cardChoice) System.out.println("Taking from the discard pile");
+            else System.out.println("Taking from the top of the deck");
+        }
         addCardToHand(cardChoice);
         int cardToDiscard = askCardDiscard();
+        if(textBased){
+            System.out.println("Chose to discard card: " + (cardToDiscard+1));
+        }
         discardCard(cardToDiscard);
         boolean endGame = askEndGame();
+        if(textBased){
+            if(endGame) System.out.println("Chose to end the game");
+            else System.out.println("Will keep playing");
+        }
         return endGame;
     }
 
     // overwrite this
     protected abstract boolean askCardChoice();
 
-    private void addCardToHand(boolean isFromDiscard){
+    public final Card drawFromDeck(boolean isFromDiscard){
+        addCardToHand(isFromDiscard);
+        return hand.justDrawn;
+    }
+
+    private final void addCardToHand(boolean isFromDiscard){
         if(isFromDiscard){
             hand.justDrawn = discardPileRef.takeTop();
         } else {
             hand.justDrawn = drawPileRef.takeTop();
-            checkReshuffleDeck();
         }
     }
     
     // overwrite this
     protected abstract int askCardDiscard();
 
-    private void discardCard(int cardToDiscard){
+    public final void discardCard(int cardToDiscard){
         Card discarded = hand.discard(cardToDiscard);
         discardPileRef.discardCard(discarded);
     }
@@ -73,34 +84,19 @@ public abstract class Player implements IPublisher<DisplayUpdate>{
      * without making the hand itself public
      * @return True if their hand is winning, false if not
      */
-    // TODO: add to UML
     public boolean hasWinningHand(){
         return hand.checkForWin();
     }
 
     /**
-     * Records the given subscriber so we know who to publish to
-     * @param subscriber the new subscriber to add
+     * Prints their current hand
      */
-    public void setSubscriber(ISubscriber<DisplayUpdate> subscriber){
-        this.subscriber = subscriber;
-    }
-
-    /**
-     * pass along the given update to our subscriber
-     */
-    public void notifySubscriber(DisplayUpdate update){
-        subscriber.giveUpdate(update);
-    }
-
-    /**
-     * Checks if we ran out of cards in the draw pile and need to reshuffle the discard into the draw
-     */
-    // TODO: add to uml
-    public void checkReshuffleDeck(){
-        if(drawPileRef.getSize() == 0){
-            System.out.println("Ran out of cards in the draw deck!");
-            // TODO: actually do something
+    public void printHand(){
+        for(int i = 0; i < Hand.HAND_SIZE; i++){
+            System.out.println("- " + (i+1) + ": " + hand.cards[i].getFormattedFullName(true));
+        }
+        if(hand.justDrawn != null){
+            System.out.println("- " + (Hand.HAND_SIZE+1) + ": " + hand.justDrawn.getFormattedFullName(true));
         }
     }
 }

@@ -1,8 +1,8 @@
 package Simulation;
+
 import java.util.Random;
 
-import Display.BoardDisplay;
-import Display.DisplayUpdate;
+import CardsAndPiles.Card;
 import Players.HumanPlayer;
 import Players.RobotPlayer;
 
@@ -13,13 +13,9 @@ Project 6-7
 */
 
 public class GameSimulator {
-    private GameBoard board;
-    private HumanPlayer human;
-    private RobotPlayer robot;
-
-    private boolean isPlayersTurn;
-    
-    private BoardDisplay display;
+    public GameBoard board;
+    public HumanPlayer human;
+    public RobotPlayer robot;
 
     public GameSimulator(){
         board = new GameBoard();
@@ -27,63 +23,108 @@ public class GameSimulator {
         robot = new RobotPlayer();
     }
 
-    void linkToDisplay(BoardDisplay display) {
-        this.display = display;
-        this.display.updateRefs(board, human);
-    }
-
     void setupNewGame() {
-        board.drawPile.shufflePile();
+        board = new GameBoard();
         
         human.setupHand(board.getStartingHand());
         human.setPileRefs(board.discardPile, board.drawPile);
-        human.setSubscriber(display);
 
         robot.setupHand(board.getStartingHand());
         robot.setPileRefs(board.discardPile, board.drawPile);
-        robot.setSubscriber(display);
-
-        Random rng = new Random();
-        isPlayersTurn = rng.nextBoolean();
     }
 
-    void startGame() {
-        // TODO: implement
+    // TODO: add this to UML
+    String asyncDrawCard(boolean isFromDiscard){
+        Card c = human.drawFromDeck(isFromDiscard);
+        return c.getFormattedFullName(false);
     }
-    
-    void verifyWin() {
-        DisplayUpdate update;
 
+    // TODO: add this to UML
+    void asyncDiscardCard(int cardToDiscard){
+        human.discardCard(cardToDiscard);
+    }
+
+    // TODO: add this to UML
+    void asyncRobotPlay(){
+        robot.takeTurn(false);
+    }
+
+    // TODO: add this to UML
+    String getDiscardTop(){
+        return board.getDiscardTop();
+    }
+
+    // TODO: add this to UML
+    Card[] getComputerHand(){
+        return robot.seeCards();
+    }
+
+    // TODO: add/rename this in the UML
+    public String getGameResults(){
         boolean humanWon = human.hasWinningHand();
         boolean robotWon = robot.hasWinningHand();
-
         if(humanWon){
             if(robotWon){
-                // both won, it's a tie
-                update = DisplayUpdate.ShowTie;
-            } else {
-                // player won!
-                update = DisplayUpdate.ShowWin;
+                return "It's a tie!";
             }
-        } else {
-            if(robotWon){
-                // robot won!
-                update = DisplayUpdate.ShowLoss;
-            } else {
-                // both lost, it's a tie
-                update = DisplayUpdate.ShowTie;
-            }
+            return "You win!!";
         }
-
-        display.giveUpdate(update);
+        return "You lose :(";
     }
+
+    
+    // public String getGameResults2() {
+    //     boolean humanWon = human.hasWinningHand();
+    //     boolean robotWon = robot.hasWinningHand();
+
+    //     String results;
+
+    //     if(humanWon){
+    //         if(robotWon){
+    //             // both won, it's a tie
+    //             results = "It's a tie! You both won";
+    //         } else {
+    //             // player won!
+    //             results = "You win!!";
+    //         }
+    //     } else {
+    //         if(robotWon){
+    //             // robot won!
+    //             results = "You lose, the robot won :(";
+    //         } else {
+    //             // both lost, it's a tie
+    //             results = "It's a tie! You both lost";
+    //         }
+    //     }
+
+    //     return results;
+    // }
 
     public static void main(String[] args){
         GameSimulator sim = new GameSimulator();
-        BoardDisplay display = new BoardDisplay();
-        sim.linkToDisplay(display);
         sim.setupNewGame();
-        sim.startGame();
-        sim.verifyWin();
+        System.out.println("Welcome to Rummy!");
+
+        boolean shouldEnd = false;
+        boolean playersTurn = new Random().nextBoolean();
+        
+        while(!shouldEnd){
+            System.out.println("----------------------");
+            
+            if(playersTurn){
+                System.out.println("Player's turn:");
+                sim.human.printHand();
+                sim.board.printDiscardTop();
+                shouldEnd = sim.human.takeTurn(true);
+            
+            } else {
+                System.out.println("Robot's turn:");
+                shouldEnd = sim.robot.takeTurn(true);
+            }
+
+            playersTurn = !playersTurn;
+        }
+
+        System.out.println(sim.getGameResults());
     }
 }

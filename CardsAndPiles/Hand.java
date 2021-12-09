@@ -1,7 +1,6 @@
 package CardsAndPiles;
 
 import java.util.HashSet;
-import java.util.Arrays;
 import java.util.ArrayList;
 
 /*
@@ -23,7 +22,11 @@ public class Hand {
         }
     }
 
-    private void addUnorderedSubsets(ArrayList<Integer> set, ArrayList<HashSet> collective){
+    /*
+    *   Helper for checkForWin--add all possible 3-of-a-kind or 4-of-a-kinds to the list of
+    *   possible melds
+    */
+    private void addUnorderedSubsets(ArrayList<Integer> set, ArrayList<HashSet<Integer>> collective){
         HashSet<Integer> meld = new HashSet<Integer>();
         for (int i = 0; i < set.size(); i++){
             meld.add(set.get(i));
@@ -36,7 +39,7 @@ public class Hand {
 
         // otherwise, we have a set of size 4, and need to add all size 3 subsets
         for (int i =0; i < set.size(); i++){ // element to leave out
-            meld.clear();
+            meld = new HashSet<Integer>();
             for (int j=0; j< set.size(); j++){
                 if (j==i){
                     continue;
@@ -47,24 +50,54 @@ public class Hand {
         }        
     }
 
-    private void addOrderedSubsets(ArrayList<Integer> set, ArrayList<HashSet> collective){
-        // TODO: sliding window of size 3, 4, ... n
+    /*
+    * Helper for checkForWin--add all possible runs (straight flush of length 3+)
+    * to the list of possible melds
+    */
+    private void addOrderedSubsets(ArrayList<Integer> set, ArrayList<HashSet<Integer>> collective){
+        int n = set.size();
+        for (int size = 3; size <= n; size++){
+            for (int start = 0; start <= n - size; start++ ){
+                HashSet<Integer> meld = new HashSet<Integer>();
+                for (int index = start; index < start+size; index ++){
+                    meld.add(set.get(index));
+                }
+                collective.add(meld);
+            }
+        }
     }
 
+    /*
+    * Returns true if the hand is a winning hand, otherwise returns false. 
+    *
+    * Finds every possible meld (3/4 of a kind or straight flush) in hand
+    * Then, for every meld and every pair of melds (note: there can only be 1 or 2 melds in a hand,
+    * since each meld must be size >=3 and the hand size is 7), check that they include every 
+    * card in the hand with no overlap. If so, the hand is valid. If no meld or pair of melds 
+    * uses each card in the hand exactly once, the hand is not a winning hand.
+    *
+    * Note: this algorithm is necessarily complex--if broken, ping maria.stull@colorado.edu
+    * to check in about changes
+    */
     public boolean checkForWin() {
+         
         // add cards into a 4 x 14 array (skip 0)--will be position in hand for cards in hand, -1 otherwise
         int[][] deckArr = new int[4][14];
-        Arrays.fill(deckArr, -1);
-        for (int i=0; i< 7; i++){
+        for (int i = 0; i<4; i++){
+            for (int j = 0; j<14; j++){
+                deckArr[i][j] = -1;
+            }
+        }
+        for (int i=0; i< HAND_SIZE; i++){
             Card card = cards[i];
-            deckArr[card.suit.ordinal()][card.value] = i;
-            // NOTE: using ordinal for enums is supposed to be bad practice, but we are not going to
+            deckArr[card.getSuit().ordinal()][card.value] = i;
+            // NOTE: using ordinal for enums is bad practice, but we are not going to
             // change the number of suits in a 52-card deck so this shouldn't break anything
         }
 
         // create ArrayList of sets for possible melds 
         // HashSet<int>: which cards in the hand make up the meld)
-        ArrayList<HashSet> possible_melds = new ArrayList<HashSet>();
+        ArrayList<HashSet<Integer>> possible_melds = new ArrayList<HashSet<Integer>>();
 
         // check for 3 or 4 of a kind
         // add all possible sets to possible_melds
@@ -80,6 +113,7 @@ public class Hand {
             }
             if (cardsInMeld >= 3){
                 addUnorderedSubsets(currMeld, possible_melds);
+                currMeld.clear();
             }
         }
 
@@ -90,13 +124,15 @@ public class Hand {
             int curr = -1;
             ArrayList<Integer> currMeld = new ArrayList<Integer>();
             for (int rank = 1; rank<=13; rank++){
-                if (deckArr[suit][rank]!=1){
+                if (deckArr[suit][rank]!= -1){
                     if (start == -1){ //starting a new possible run
                         start = rank;
                         curr = rank;
+                        currMeld.add(deckArr[suit][rank]);
                     }
                     else{ //we are already in a possible run
                         curr++;
+                        currMeld.add(deckArr[suit][rank]);
                     }
                 } else{ //card not in hand
                     if (start != -1){
@@ -106,9 +142,14 @@ public class Hand {
                             // reset
                         start = -1;
                         curr = -1;
+                        currMeld.clear();
                     }
                 }
             }
+            if(start != -1 && curr - start >= 2){ //we have at least 3 cards in the run at the end of the loop
+                addOrderedSubsets(currMeld, possible_melds);
+            }
+
         }
 
         // for each pair of runs:
@@ -118,19 +159,28 @@ public class Hand {
 
         for (int i=0; i< possible_melds.size(); i++){
             HashSet<Integer> meld1 = possible_melds.get(i);
-            if (meld1.size()==7){
+            if (meld1.size()==HAND_SIZE){
                 return true;
             }
             for (int j=i+1; j< possible_melds.size(); j++){
                 HashSet<Integer> meld2 = possible_melds.get(j);
                 HashSet<Integer> intersection = new HashSet<Integer>(meld1);
                 intersection.retainAll(meld2);
-                if(meld1.size() + meld2.size() == 7 && intersection.size()==0){
+                if(meld1.size() + meld2.size() ==  HAND_SIZE && intersection.size()==0){
                     return true;
                 }
             }
         }
+        
         return false;
+    }
+
+    // Helper method for testing purposes
+    public void addCard(Card c, int position){
+        if (position >= 0 && position < HAND_SIZE){
+            cards[position] = c;
+        }
+
     }
 
     public Card discard(int which){
